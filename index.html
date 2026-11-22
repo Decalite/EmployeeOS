@@ -1,0 +1,2105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d0b18">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="EmployeeOS">
+<meta name="format-detection" content="telephone=no">
+<title>EmployeeOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>/* EmployeeOS styles - premium dark purple + white. Mobile-first, iPhone safe-area aware. */
+:root{color-scheme:dark;
+  --bg:#0d0b18;--bg2:#120f21;--panel:#171326;--panel2:#211a36;--line:#34294f;--line2:#ffffff14;
+  --purple:#8b5cf6;--purple2:#6d3fd6;--lav:#c4b5fd;--white:#f7f5ff;--muted:#a69bbd;
+  --green:#35d39a;--red:#fb7185;--gold:#f6c96b;--blue:#60a5fa;
+  --sat:env(safe-area-inset-top,0px);--sab:env(safe-area-inset-bottom,0px);--sal:env(safe-area-inset-left,0px);--sar:env(safe-area-inset-right,0px);
+  --tabh:62px;--r:18px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;background:var(--bg)}
+body{margin:0;min-height:100vh;min-height:100dvh;background:radial-gradient(circle at 15% -5%,#2a1a52 0,transparent 38%),radial-gradient(circle at 100% 30%,#1c1240 0,transparent 35%),var(--bg);background-attachment:fixed;color:var(--white);
+  font:15px/1.45 Inter,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased;overscroll-behavior-y:none}
+h1,h2,h3,h4{margin:0;line-height:1.2}
+h1{font-size:24px;letter-spacing:-.3px}h2{font-size:19px}h3{font-size:16px}
+p{margin:0}a{color:var(--lav)}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer;border:0;-webkit-appearance:none;appearance:none;touch-action:manipulation}
+.hidden{display:none!important}
+.muted{color:var(--muted)}.small{font-size:12.5px}.tiny{font-size:11px}.good{color:var(--green)}.bad{color:var(--red)}.warn{color:var(--gold)}.right{text-align:right}.center{text-align:center}.bold{font-weight:700}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.between{justify-content:space-between}.grow{flex:1;min-width:0}.nowrap{flex-wrap:nowrap}
+.stack>*+*{margin-top:12px}.stack-s>*+*{margin-top:8px}.stack-l>*+*{margin-top:18px}
+.ico{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ico.sm{width:16px;height:16px}.ico.lg{width:26px;height:26px}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:10px 18px;border-radius:14px;font-weight:700;color:#fff;
+  background:linear-gradient(135deg,#8b5cf6,#6336c9);box-shadow:0 6px 18px #6d3fd655;transition:transform .12s ease,opacity .2s,box-shadow .2s;text-decoration:none;white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:#29213e;border:1px solid var(--line);box-shadow:none}
+.btn.white{background:linear-gradient(180deg,#fff,#e9e2ff);color:#2b1561;box-shadow:0 8px 24px #c4b5fd44}
+.btn.danger{background:#4a1f30;border:1px solid #854158;box-shadow:none;color:#ffd4dc}
+.btn.good{background:linear-gradient(135deg,#1fb887,#138a68);box-shadow:0 6px 18px #1fb88740}
+.btn.sm{min-height:36px;padding:6px 12px;font-size:13px;border-radius:11px}
+.btn.block{width:100%}
+.btn:disabled,.btn.is-busy{opacity:.5;cursor:not-allowed;transform:none}
+.btn.is-busy::after{content:"";width:14px;height:14px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .7s linear infinite}
+.iconbtn{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:#ffffff0d;border:1px solid var(--line2);color:var(--white);position:relative}
+.iconbtn:active{transform:scale(.94)}
+.dot{position:absolute;top:6px;right:6px;min-width:17px;height:17px;border-radius:9px;background:var(--red);color:#fff;font-size:10px;font-weight:800;display:grid;place-items:center;padding:0 4px;border:2px solid var(--bg)}
+
+/* ---------- inputs ---------- */
+.field,select.field,textarea.field{width:100%;min-height:46px;background:#100d1c;border:1px solid var(--line);border-radius:13px;padding:11px 13px;font-size:16px;outline:none;color:var(--white);-webkit-appearance:none;appearance:none;transition:border-color .2s,box-shadow .2s}
+textarea.field{min-height:90px;resize:vertical}
+select.field{background-image:linear-gradient(45deg,transparent 50%,var(--lav) 50%),linear-gradient(135deg,var(--lav) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px;background-repeat:no-repeat;padding-right:36px}
+.field:focus{border-color:var(--purple);box-shadow:0 0 0 3px #8b5cf633}
+.field::placeholder{color:#7d7298}
+label.lbl{display:grid;gap:6px;font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.2px}
+.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.form .full{grid-column:1/-1}
+.err{background:#3a1626;border:1px solid #7d3148;color:#ffd0da;border-radius:12px;padding:10px 12px;font-size:13.5px}
+.ok{background:#12372c;border:1px solid #1f6b52;color:#c8f5e6;border-radius:12px;padding:10px 12px;font-size:13.5px}
+.notice{background:#241a3d;border:1px solid #4b3a74;color:#e6dcff;border-radius:12px;padding:11px 13px;font-size:13.5px}
+
+/* ---------- cards / tiles ---------- */
+.card{background:linear-gradient(160deg,#1b1630,#141121);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:0 10px 30px #0006}
+.card.flat{box-shadow:none}.card.tight{padding:12px}
+.card h3{margin-bottom:10px}
+.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.tile{background:linear-gradient(160deg,#1d1736,#151126);border:1px solid var(--line);border-radius:16px;padding:14px;min-width:0}
+.tile .k{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.9px;font-weight:700}
+.tile .v{font-size:22px;font-weight:850;margin:6px 0 2px;letter-spacing:-.4px;overflow-wrap:anywhere}
+.tile.accent{background:linear-gradient(145deg,#3b2370,#241946);border-color:#7958ad}
+.pill{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:99px;background:#30264a;color:#dccfff;font-size:11.5px;font-weight:700;white-space:nowrap}
+.pill.green{background:#12372c;color:#7ff0c4}.pill.red{background:#451c2b;color:#ffb3c1}.pill.gold{background:#44350f;color:#ffdf8d}.pill.blue{background:#16304f;color:#a9d1ff}.pill.gray{background:#2a2540;color:#b9afd0}
+.bar{height:9px;background:#302744;border-radius:20px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#8b5cf6,#e0d0ff);border-radius:20px;transition:width .7s cubic-bezier(.2,.8,.2,1)}
+.avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:14px;background:linear-gradient(145deg,#7c4ff0,#4a2a9e);color:#fff;flex:none;border:1px solid #ffffff22}
+.avatar.sm{width:34px;height:34px;font-size:12px}
+.empty{padding:26px 14px;text-align:center;color:var(--muted)}
+.empty .ico{width:34px;height:34px;opacity:.6;margin-bottom:8px}
+.list>.item{display:flex;align-items:center;gap:12px;padding:12px 2px;border-bottom:1px solid var(--line2)}
+.list>.item:last-child{border-bottom:0}
+.item .title{font-weight:700}
+.item.click{cursor:pointer}.item.click:active{background:#ffffff08}
+.seg{display:flex;background:#100d1c;border:1px solid var(--line);border-radius:14px;padding:4px;gap:4px;overflow-x:auto;scrollbar-width:none}
+.seg::-webkit-scrollbar{display:none}
+.seg button,.seg a{display:flex;align-items:center;justify-content:center;text-decoration:none;flex:1;min-height:36px;padding:6px 12px;border-radius:10px;background:transparent;color:var(--muted);font-weight:700;font-size:13px;white-space:nowrap;transition:background .2s,color .2s}
+.seg button.on,.seg a.on{background:linear-gradient(135deg,#8b5cf6,#6336c9);color:#fff;box-shadow:0 4px 12px #6d3fd655}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -4px;padding:0 4px}
+table.t{width:100%;border-collapse:collapse;min-width:520px}
+table.t th,table.t td{padding:11px 9px;text-align:left;border-bottom:1px solid var(--line2);font-size:13.5px;vertical-align:middle}
+table.t th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.6px;white-space:nowrap}
+table.t tr.click{cursor:pointer}table.t tr.click:active{background:#ffffff08}
+table.t td.num,table.t th.num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* ---------- shell ---------- */
+.app{min-height:100vh;min-height:100dvh}
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;justify-content:space-between;
+  padding:calc(var(--sat) + 10px) calc(16px + var(--sar)) 10px calc(16px + var(--sal));
+  background:#0d0b18d9;-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border-bottom:1px solid var(--line2)}
+.brand{font-weight:900;letter-spacing:.3px;font-size:19px;display:flex;align-items:center;gap:8px}
+.brand em{font-style:normal;color:var(--lav)}
+.brand .mark{width:28px;height:28px;border-radius:9px;background:linear-gradient(145deg,#a98bff,#5b2fc4);display:grid;place-items:center;box-shadow:0 4px 14px #8b5cf666;font-size:15px}
+.main{padding:16px calc(16px + var(--sar)) calc(var(--tabh) + var(--sab) + 26px) calc(16px + var(--sal));max-width:980px;margin:0 auto}
+.page{animation:fadeUp .32s cubic-bezier(.2,.8,.2,1)}
+.page-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:4px 0 16px}
+.page-head .sub{color:var(--muted);font-size:13px;margin-top:3px}
+.back{display:inline-flex;align-items:center;gap:4px;color:var(--lav);background:none;font-weight:700;padding:6px 0;margin-bottom:6px;min-height:36px}
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;padding:6px calc(8px + var(--sar)) calc(6px + var(--sab)) calc(8px + var(--sal));
+  background:#110e1fe8;-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);border-top:1px solid var(--line2)}
+.tabbar a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:50px;color:#8f84a8;text-decoration:none;font-size:10.5px;font-weight:700;border-radius:14px;position:relative;transition:color .2s}
+.tabbar a.on{color:#fff}
+.tabbar a.on::before{content:"";position:absolute;top:-7px;width:26px;height:3px;border-radius:3px;background:linear-gradient(90deg,#8b5cf6,#e0d0ff)}
+.tabbar a.on .ico{stroke:var(--lav)}
+.tabbar .dot{top:2px;right:calc(50% - 22px);border-color:#110e1f}
+.sidebar{display:none}
+@media(min-width:900px){
+  .app{display:grid;grid-template-columns:250px minmax(0,1fr)}
+  .sidebar{display:flex;flex-direction:column;gap:4px;position:sticky;top:0;height:100vh;height:100dvh;padding:22px 14px;border-right:1px solid var(--line2);background:#0e0b1acc}
+  .sidebar .brand{padding:0 10px 18px}
+  .sidebar a{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:13px;color:#c8bfda;text-decoration:none;font-weight:650;position:relative;transition:background .2s}
+  .sidebar a:hover{background:#ffffff0a}.sidebar a.on{background:#30234b;color:#fff;box-shadow:inset 0 0 0 1px #554078}
+  .sidebar .sp{flex:1}
+  .sidebar .dot{position:static;margin-left:auto;border:0}
+  .tabbar{display:none}
+  .main{padding-bottom:40px;max-width:1080px}
+  .topbar .brand{display:none}
+  .tiles.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .tiles.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .cols2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+}
+@media(max-width:899px){.tiles.three{grid-template-columns:repeat(3,minmax(0,1fr))}.tiles.three .tile{padding:10px}.tiles.three .v{font-size:16px}.cols2>*+*{margin-top:14px}}
+@media(max-width:520px){.form{grid-template-columns:1fr}h1{font-size:22px}.tiles.four{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.cols2.wide{display:block}
+
+/* ---------- hero / start work ---------- */
+.hero{position:relative;overflow:hidden;background:linear-gradient(125deg,#3b2272,#1e1738 62%,#171227);border:1px solid #7958ad;border-radius:24px;padding:20px;box-shadow:0 18px 50px #3b227255}
+.hero::after{content:"";position:absolute;right:-60px;top:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,#a98bff44,transparent 70%);pointer-events:none}
+.hero h2{font-size:22px;margin:8px 0 4px}
+.timer{font-variant-numeric:tabular-nums;font-size:38px;font-weight:850;letter-spacing:1px;margin:6px 0}
+.startbtn{width:100%;min-height:72px;margin-top:16px;border-radius:20px;font-size:19px;font-weight:900;letter-spacing:.8px;display:flex;align-items:center;justify-content:center;gap:12px;color:#2b1561;background:linear-gradient(180deg,#fff,#e5dcff);box-shadow:0 0 0 0 #c4b5fd88,0 14px 34px #8b5cf655;animation:pulse 2.4s infinite;transition:transform .12s}
+.startbtn:active{transform:scale(.97)}
+.startbtn.leave{color:#fff;background:linear-gradient(135deg,#c2527c,#7a2c58);box-shadow:0 14px 34px #fb718544;animation:none}
+.startbtn:disabled{animation:none;opacity:.6;cursor:not-allowed;box-shadow:none}
+.startbtn.is-busy{opacity:.7}
+.live{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 #35d39a88;animation:pulseG 1.8s infinite;margin-right:6px}
+
+/* ---------- tier badge ---------- */
+.badge3d{display:inline-block;flex:none;filter:drop-shadow(0 8px 10px #0009) drop-shadow(0 0 14px var(--glow,#8b5cf655));transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.badge3d:hover{transform:translateY(-3px) rotate(-2deg) scale(1.04)}
+.tierrow{display:flex;align-items:center;gap:16px}
+.ladder{display:flex;justify-content:space-between;gap:6px;margin-top:14px}
+.ladder>div{flex:1;text-align:center;font-size:10.5px;color:var(--muted);opacity:.65}.ladder>div.on{opacity:1;color:#fff;font-weight:700}
+
+/* ---------- leaderboard ---------- */
+.lb{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:15px;background:#ffffff06;border:1px solid transparent}
+.lb+.lb{margin-top:8px}
+.lb.me{background:#8b5cf622;border-color:#8b5cf688}
+.lb .rk{width:30px;text-align:center;font-weight:900;font-size:16px;color:var(--lav)}
+.lb.r1 .rk{color:#ffd666}.lb.r2 .rk{color:#dfe6f2}.lb.r3 .rk{color:#e9a566}
+.lb .pts{font-weight:850;font-variant-numeric:tabular-nums}
+.podium{display:flex;justify-content:center;align-items:flex-end;gap:10px;margin:6px 0 16px}
+.podium>div{text-align:center;flex:1;max-width:120px;min-width:0}
+.podium .name{font-size:12.5px;font-weight:700;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.podium .step{height:var(--h);border-radius:12px 12px 4px 4px;margin-top:8px;background:linear-gradient(180deg,#5b3aa8,#2a1c52);display:grid;place-items:start center;padding-top:6px;font-weight:900;color:#fff}
+
+/* ---------- calendar ---------- */
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.cal .dow{text-align:center;font-size:10.5px;color:var(--muted);padding:4px 0;font-weight:700}
+.cal .d{min-height:52px;padding:5px 3px;border-radius:11px;background:#1d1736;border:1px solid #3a2d58;text-align:center;color:var(--white);display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px}
+.cal .d b{font-size:12.5px}.cal .d small{font-size:9.5px;color:var(--muted);line-height:1.1;word-break:break-all}
+.cal .d.today{border-color:var(--lav)}.cal .d.sel{background:#432a7a;border-color:#c4b5fd}
+.cal .d.has small{color:#9ff0cf}.cal .d.leave{background:#3a2a12;border-color:#7b5a1d}.cal .d.leave small{color:var(--gold)}
+.cal .d.blank{visibility:hidden}.cal .d:disabled{opacity:.4}
+
+/* ---------- chat ---------- */
+.chat{display:flex;flex-direction:column;height:calc(100vh - 350px - var(--sab) - var(--sat));height:calc(100dvh - 350px - var(--sab) - var(--sat));min-height:320px}
+@media(min-width:900px){.chat{height:calc(100vh - 260px);height:calc(100dvh - 260px)}}
+.chat .msgs{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:6px 2px 10px;display:flex;flex-direction:column;gap:3px}
+.bub{max-width:80%;padding:9px 13px;border-radius:20px;background:#2a2142;overflow-wrap:anywhere;font-size:15px;animation:pop .2s ease}
+.bub.me{align-self:flex-end;background:linear-gradient(135deg,#8b5cf6,#6336c9);border-bottom-right-radius:6px}
+.bub.them{align-self:flex-start;border-bottom-left-radius:6px}
+.bub .att{display:block;margin-top:6px}
+.bub img,.bub video{max-width:100%;max-height:260px;border-radius:14px;display:block;background:#000}
+.bub .file{display:flex;align-items:center;gap:8px;background:#0000002e;border-radius:12px;padding:9px 11px;color:inherit;text-decoration:none;font-size:13.5px}
+.meta{font-size:10.5px;color:var(--muted);margin:2px 6px 8px}.meta.me{align-self:flex-end}.meta.them{align-self:flex-start}
+.dayline{align-self:center;font-size:11px;color:var(--muted);margin:10px 0 4px;background:#ffffff0a;padding:3px 10px;border-radius:99px}
+.composer{display:flex;gap:8px;align-items:flex-end;padding-top:8px}
+.composer .field{border-radius:22px;min-height:44px;max-height:120px;padding:11px 16px;resize:none;overflow-y:auto}
+.composer .btn.round{width:44px;min-height:44px;height:44px;padding:0;border-radius:50%}
+.pending-file{display:flex;align-items:center;gap:8px;background:#241a3d;border:1px solid #4b3a74;border-radius:12px;padding:7px 10px;font-size:13px;margin-top:8px}
+.convo{display:flex;align-items:center;gap:12px;padding:12px;border-radius:15px;cursor:pointer;background:transparent;width:100%;text-align:left;color:inherit}
+.convo:hover,.convo.on{background:#ffffff0a}.convo .last{color:var(--muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.unread{width:10px;height:10px;border-radius:50%;background:var(--purple);box-shadow:0 0 8px var(--purple);flex:none}
+.admin-chat{display:grid;grid-template-columns:300px minmax(0,1fr);gap:14px}
+@media(max-width:899px){.admin-chat{display:block}.admin-chat .side.hide-m{display:none}.admin-chat .pane.hide-m{display:none}}
+
+/* ---------- resources ---------- */
+.res{display:flex;gap:12px;align-items:center;padding:12px;border-radius:15px;border:1px solid var(--line);background:#1a152b;width:100%;text-align:left;color:inherit}
+.res+.res{margin-top:10px}
+.res .rico{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;background:#8b5cf622;color:var(--lav);flex:none}
+.viewer img,.viewer video{width:100%;max-height:60vh;border-radius:14px;background:#000;object-fit:contain}
+.viewer iframe{width:100%;height:60vh;border:0;border-radius:12px;background:#fff}
+.viewer pre{white-space:pre-wrap;word-wrap:break-word;font:inherit;background:#100d1c;border:1px solid var(--line);border-radius:12px;padding:14px;max-height:55vh;overflow:auto}
+
+/* ---------- modal / toast ---------- */
+.overlay{position:fixed;top:0;right:0;bottom:0;left:0;z-index:100;background:#05030cc4;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);display:flex;align-items:flex-end;justify-content:center;animation:fade .2s ease}
+.sheet{width:100%;max-width:560px;max-height:92vh;max-height:92dvh;overflow-y:auto;-webkit-overflow-scrolling:touch;background:linear-gradient(170deg,#211a38,#151126);border:1px solid #4a3a75;border-radius:26px 26px 0 0;padding:20px 18px calc(20px + var(--sab));animation:slideUp .3s cubic-bezier(.2,.8,.2,1)}
+.sheet.wide{max-width:760px}
+.sheet .grab{width:42px;height:4px;border-radius:4px;background:#ffffff33;margin:-8px auto 14px}
+.sheet-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+@media(min-width:700px){.overlay{align-items:center}.sheet{border-radius:26px;animation:popIn .25s cubic-bezier(.2,.8,.2,1)}.sheet .grab{display:none}}
+.toasts{position:fixed;left:0;right:0;bottom:calc(var(--tabh) + var(--sab) + 14px);z-index:200;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;padding:0 16px}
+@media(min-width:900px){.toasts{bottom:24px}}
+.toast{pointer-events:auto;max-width:440px;background:#2b1f48;border:1px solid #7656a9;color:#fff;padding:12px 16px;border-radius:14px;box-shadow:0 12px 30px #000a;animation:fadeUp .25s ease;font-weight:600;font-size:14px}
+.toast.err{background:#4a1f30;border-color:#a14860}.toast.ok{background:#14412f;border-color:#2c8b68}
+
+/* ---------- login / splash ---------- */
+.center-screen{min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:calc(24px + var(--sat)) 20px calc(24px + var(--sab))}
+.login{width:100%;max-width:410px;animation:fadeUp .5s cubic-bezier(.2,.8,.2,1)}
+.login .logo{width:66px;height:66px;border-radius:21px;margin:0 auto 14px;background:linear-gradient(145deg,#b79bff,#5b2fc4);display:grid;place-items:center;font-size:32px;box-shadow:0 14px 40px #8b5cf688}
+.spinner{width:34px;height:34px;border-radius:50%;border:3px solid #ffffff22;border-top-color:var(--lav);animation:spin .8s linear infinite;margin:0 auto}
+.skeleton{background:linear-gradient(90deg,#1c1631 25%,#2a2145 37%,#1c1631 63%);background-size:400% 100%;animation:shimmer 1.4s ease infinite;border-radius:14px}
+.previewbar{background:#3a2a12;color:#ffe4a8;border-bottom:1px solid #7b5a1d;font-size:12px;font-weight:600;text-align:center;padding:calc(6px + var(--sat)) 12px 6px}
+.previewbar+.app .topbar{top:0}
+.fatal{max-width:460px;margin:0 auto}
+
+/* ---------- animations ---------- */
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+@keyframes popIn{from{transform:scale(.94);opacity:0}to{transform:none;opacity:1}}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:none;opacity:1}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes shimmer{0%{background-position:100% 50%}100%{background-position:0 50%}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 #c4b5fd88,0 14px 34px #8b5cf655}70%{box-shadow:0 0 0 16px #c4b5fd00,0 14px 34px #8b5cf655}100%{box-shadow:0 0 0 0 #c4b5fd00,0 14px 34px #8b5cf655}}
+@keyframes pulseG{0%{box-shadow:0 0 0 0 #35d39a88}70%{box-shadow:0 0 0 8px #35d39a00}100%{box-shadow:0 0 0 0 #35d39a00}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+<noscript><style>#boot{display:none!important}</style></noscript>
+</head>
+<body>
+<!-- Static loading state: visible instantly, removed by JS when the app is ready. -->
+<div id="boot" class="center-screen">
+  <div class="login center">
+    <div class="logo">✦</div>
+    <h1>Employee<span style="color:var(--lav)">OS</span></h1>
+    <div class="spinner" style="margin-top:22px"></div>
+    <p class="muted small" style="margin-top:14px">Loading your workspace…</p>
+    <p id="bootmsg" class="notice small hidden" style="margin-top:16px;text-align:left">Still loading? Check your internet connection and reload this page. If you opened this file from the iPhone Files app, open the hosted web link in Safari instead (Files preview cannot run apps).</p>
+  </div>
+</div>
+<div id="root"></div>
+<noscript>
+  <div class="center-screen"><div class="card login stack">
+    <h2>JavaScript is required</h2>
+    <p class="muted">EmployeeOS is a web app and needs JavaScript. If you opened this file from the iPhone <b>Files</b> app (Quick Look preview), that preview cannot run apps — open the hosted EmployeeOS link in <b>Safari</b> instead.</p>
+  </div></div>
+</noscript>
+<script>window.EOS_APP='employee';window.__bootTimer=setTimeout(function(){var m=document.getElementById('bootmsg');if(m)m.classList.remove('hidden')},7000);</script>
+<script>
+window.EOS_CONFIG = {
+  "supabaseUrl": "https://xrwdeomszcradfuwdlkq.supabase.co",
+  "supabaseAnonKey": "sb_publishable_cd5oKVd_jVBj_FIiTLqZAQ_APPkrcsy",
+  "employeeEmailDomain": "employees.employeeos.app",
+  "currency": "₹",
+  "locale": "en-IN"
+};
+
+</script>
+<script>
+/* EmployeeOS util.js - pure helpers (no DOM needed except download()). Safari 14+ compatible. */
+(function (root) {
+  'use strict';
+  var EOS = root.EOS = root.EOS || {};
+  var cfgIn = root.EOS_CONFIG || {};
+  var U = EOS.util = {};
+
+  /* ---------- safe HTML templating ---------- */
+  function SafeStr(s) { this.s = s; }
+  SafeStr.prototype.toString = function () { return this.s; };
+  U.esc = function (s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  };
+  U.raw = function (s) { return new SafeStr(String(s == null ? '' : s)); };
+  function val(v) {
+    if (v instanceof SafeStr) return v.s;
+    if (Array.isArray(v)) return v.map(val).join('');
+    if (v == null || v === false) return '';
+    return U.esc(v);
+  }
+  /* html`...${userValue}...` escapes every interpolation unless it is already SafeStr / array of SafeStr */
+  U.html = function (strings) {
+    var out = strings[0];
+    for (var i = 1; i < arguments.length; i++) out += val(arguments[i]) + strings[i];
+    return new SafeStr(out);
+  };
+
+  /* ---------- ids / numbers ---------- */
+  U.uid = function () {
+    try { if (root.crypto && root.crypto.randomUUID) return root.crypto.randomUUID(); } catch (e) {}
+    var d = Date.now();
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = (d + Math.random() * 16) % 16 | 0; d = Math.floor(d / 16);
+      return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+  };
+  U.round2 = function (n) { return Math.round((Number(n) || 0) * 100) / 100; };
+  U.sum = function (arr, fn) { var t = 0; for (var i = 0; i < arr.length; i++) t += Number(fn ? fn(arr[i]) : arr[i]) || 0; return t; };
+  U.groupBy = function (arr, fn) { var o = {}; arr.forEach(function (x) { var k = fn(x); (o[k] = o[k] || []).push(x); }); return o; };
+  U.byId = function (arr, key) { var o = {}; arr.forEach(function (x) { o[x[key || 'id']] = x; }); return o; };
+  U.debounce = function (fn, ms) { var t; return function () { var a = arguments, s = this; clearTimeout(t); t = setTimeout(function () { fn.apply(s, a); }, ms); }; };
+  U.pick = function (o, keys) { var r = {}; keys.forEach(function (k) { if (o[k] !== undefined) r[k] = o[k]; }); return r; };
+  U.clone = function (o) { return o === undefined ? undefined : JSON.parse(JSON.stringify(o)); };
+
+  /* ---------- dates (ALL local-time; never use toISOString().slice for dates) ---------- */
+  function p2(n) { return n < 10 ? '0' + n : '' + n; }
+  U.dateKey = function (d) { d = d || new Date(); return d.getFullYear() + '-' + p2(d.getMonth() + 1) + '-' + p2(d.getDate()); };
+  U.todayKey = function () { return U.dateKey(new Date()); };
+  U.parseKey = function (k) { var a = String(k).slice(0, 10).split('-'); return new Date(+a[0], +a[1] - 1, +a[2]); };
+  U.addDays = function (k, n) { var d = U.parseKey(k); d.setDate(d.getDate() + n); return U.dateKey(d); };
+  U.monthKey = function (d) { d = d || new Date(); return d.getFullYear() + '-' + p2(d.getMonth() + 1); };
+  U.addMonths = function (mk, n) { var a = mk.split('-'); var d = new Date(+a[0], +a[1] - 1 + n, 1); return U.monthKey(d); };
+  U.monthDays = function (mk) { var a = mk.split('-'); return new Date(+a[0], +a[1], 0).getDate(); };
+  U.monthStart = function (mk) { var a = mk.split('-'); return new Date(+a[0], +a[1] - 1, 1); };
+  U.monthLabel = function (mk) { return U.monthStart(mk).toLocaleString('en', { month: 'long', year: 'numeric' }); };
+  U.startOfDay = function (d) { d = new Date(d || Date.now()); d.setHours(0, 0, 0, 0); return d; };
+  U.startOfWeek = function (d) { d = U.startOfDay(d); var wd = (d.getDay() + 6) % 7; d.setDate(d.getDate() - wd); return d; }; // Monday
+  U.startOfMonth = function (d) { d = U.startOfDay(d); d.setDate(1); return d; };
+  U.ms = function (iso) { return new Date(iso).getTime(); };
+
+  /* ---------- formatting ---------- */
+  U.money = function (n, opts) {
+    var v = Number(n) || 0, neg = v < 0; v = Math.abs(v);
+    var s;
+    try { var frac = Math.round(v * 100) % 100 !== 0 ? 2 : 0; s = v.toLocaleString(cfgIn.locale || 'en-IN', { minimumFractionDigits: frac, maximumFractionDigits: 2 }); } catch (e) { s = String(v); }
+    return (neg ? '-' : (opts && opts.sign ? '+' : '')) + (cfgIn.currency || '₹') + s;
+  };
+  U.num = function (n) { try { return Number(n || 0).toLocaleString(cfgIn.locale || 'en-IN'); } catch (e) { return String(n); } };
+  U.fmtDate = function (x, long) {
+    var d = typeof x === 'string' && x.length === 10 ? U.parseKey(x) : new Date(x);
+    if (isNaN(d)) return '—';
+    return d.toLocaleDateString('en', long ? { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' } : { day: 'numeric', month: 'short' });
+  };
+  U.fmtTime = function (iso) {
+    if (!iso) return '—'; var d = new Date(iso); if (isNaN(d)) return '—';
+    return d.toLocaleTimeString('en', { hour: 'numeric', minute: '2-digit' });
+  };
+  U.fmtDateTime = function (iso) { return iso ? U.fmtDate(iso) + ', ' + U.fmtTime(iso) : '—'; };
+  U.fmtHours = function (h) {
+    h = Number(h) || 0; var m = Math.round(h * 60); var hh = Math.floor(m / 60), mm = m % 60;
+    return hh + 'h ' + (mm < 10 ? '0' + mm : mm) + 'm';
+  };
+  U.clock = function (ms) { // hh:mm:ss
+    ms = Math.max(0, Math.floor(ms / 1000)); var h = Math.floor(ms / 3600), m = Math.floor(ms % 3600 / 60), s = ms % 60;
+    return p2(h) + ':' + p2(m) + ':' + p2(s);
+  };
+  U.ago = function (iso) {
+    var s = Math.max(0, (Date.now() - new Date(iso).getTime()) / 1000);
+    if (s < 60) return 'just now'; if (s < 3600) return Math.floor(s / 60) + 'm ago';
+    if (s < 86400) return Math.floor(s / 3600) + 'h ago'; if (s < 604800) return Math.floor(s / 86400) + 'd ago';
+    return U.fmtDate(iso);
+  };
+  U.initials = function (name) { return String(name || '?').trim().split(/\s+/).slice(0, 2).map(function (x) { return x.charAt(0).toUpperCase(); }).join(''); };
+
+  U.fileKind = function (mime, name) {
+    mime = String(mime || '').toLowerCase(); name = String(name || '').toLowerCase();
+    if (mime.indexOf('image/') === 0) return 'image';
+    if (mime.indexOf('video/') === 0) return 'video';
+    if (mime === 'application/pdf' || /\.pdf$/.test(name)) return 'pdf';
+    if (/\.(docx?|xlsx?|pptx?|txt|csv|rtf|odt)$/.test(name) || /officedocument|msword|text\//.test(mime)) return 'document';
+    return 'file';
+  };
+  U.fmtSize = function (b) { b = Number(b) || 0; if (b < 1024) return b + ' B'; if (b < 1048576) return Math.round(b / 1024) + ' KB'; return (b / 1048576).toFixed(1) + ' MB'; };
+
+  U.download = function (filename, text, mime) {
+    var blob = new Blob([text], { type: mime || 'text/csv;charset=utf-8' });
+    var url = URL.createObjectURL(blob); var a = document.createElement('a');
+    a.href = url; a.download = filename; document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(url); a.remove(); }, 1000);
+  };
+  U.csv = function (rows) {
+    return rows.map(function (r) { return r.map(function (c) { c = String(c == null ? '' : c); return /[",\n]/.test(c) ? '"' + c.replace(/"/g, '""') + '"' : c; }).join(','); }).join('\n');
+  };
+  U.randomPassword = function (len) {
+    var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789', out = '';
+    var arr = new Uint32Array(len || 10);
+    try { root.crypto.getRandomValues(arr); } catch (e) { for (var i = 0; i < arr.length; i++) arr[i] = Math.floor(Math.random() * 4294967296); }
+    for (var j = 0; j < arr.length; j++) out += chars.charAt(arr[j] % chars.length);
+    return out;
+  };
+
+  if (typeof module !== 'undefined' && module.exports) module.exports = EOS;
+})(typeof window !== 'undefined' ? window : globalThis);
+
+</script>
+<script>
+/* EmployeeOS ui.js - DOM helpers: icons, 3D tier badges, toast, modal, event delegation, boot/error screens. */
+(function (root) {
+  'use strict';
+  var EOS = root.EOS = root.EOS || {};
+  var U = EOS.util, html = U.html, raw = U.raw;
+  var ui = EOS.ui = {};
+
+  /* ---------- icons (24px stroke icons) ---------- */
+  var ICONS = {
+    home: '<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>',
+    wallet: '<path d="M3 7h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M3 7l12-3v3"/><circle cx="17" cy="13.5" r="1"/>',
+    trophy: '<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/>',
+    chat: '<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/>',
+    grid: '<rect x="4" y="4" width="6" height="6" rx="1.5"/><rect x="14" y="4" width="6" height="6" rx="1.5"/><rect x="4" y="14" width="6" height="6" rx="1.5"/><rect x="14" y="14" width="6" height="6" rx="1.5"/>',
+    bell: '<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/>',
+    users: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/>',
+    user: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+    clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+    x: '<path d="M6 6l12 12M18 6L6 18"/>',
+    plus: '<path d="M12 5v14M5 12h14"/>',
+    send: '<path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/>',
+    clip: '<path d="M21 11.5l-8.5 8.5a5.5 5.5 0 0 1-8-8L13 3.5a3.7 3.7 0 0 1 5.3 5.3L9.8 17.3a1.8 1.8 0 0 1-2.6-2.6L15 7"/>',
+    file: '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/>',
+    play: '<path d="M8 5l11 7-11 7z"/>',
+    image: '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 9"/>',
+    sliders: '<path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/>',
+    logout: '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/>',
+    calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+    left: '<path d="M15 5l-7 7 7 7"/>', right: '<path d="M9 5l7 7-7 7"/>',
+    dash: '<rect x="3" y="3" width="8" height="10" rx="2"/><rect x="13" y="3" width="8" height="6" rx="2"/><rect x="13" y="11" width="8" height="10" rx="2"/><rect x="3" y="15" width="8" height="6" rx="2"/>',
+    inbox: '<path d="M4 13l3-8h10l3 8v6H4z"/><path d="M4 13h5l1 2h4l1-2h5"/>',
+    trash: '<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>',
+    edit: '<path d="M4 20h4L19 9l-4-4L4 16z"/>',
+    mega: '<path d="M3 11v3a1 1 0 0 0 1 1h3l8 4V6L7 10H4a1 1 0 0 0-1 1z"/><path d="M19 9a4 4 0 0 1 0 6"/>',
+    eye: '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+    download: '<path d="M12 3v12M7 10l5 5 5-5M5 21h14"/>',
+    shield: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>',
+    book: '<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/>',
+    lock: '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+    search: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>',
+    refresh: '<path d="M20 11a8 8 0 0 0-14-4M4 13a8 8 0 0 0 14 4"/><path d="M20 4v5h-5M4 20v-5h5"/>',
+    coffee: '<path d="M4 9h12v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"/><path d="M16 11h2a2 2 0 0 1 0 4h-2M8 3v3M12 3v3"/>',
+    star: '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',
+    activity: '<path d="M3 12h4l3-8 4 16 3-8h4"/>',
+    info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>'
+  };
+  ui.icon = function (name, cls) {
+    return raw('<svg class="ico ' + (cls || '') + '" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + (ICONS[name] || ICONS.info) + '</svg>');
+  };
+
+  /* ---------- premium 3D-style tier badges (inline SVG: bevelled rim, glossy face, embossed emblem) ---------- */
+  var TS = {
+    Bronze: { hi: '#f8cfa4', mid: '#cd7b3a', lo: '#6a3512', glow: '#e0905066' },
+    Silver: { hi: '#ffffff', mid: '#b6bfce', lo: '#596273', glow: '#c9d3e566' },
+    Gold: { hi: '#fff5b8', mid: '#eaa92b', lo: '#855006', glow: '#f6c96b88' },
+    Platinum: { hi: '#f6feff', mid: '#8fd6ea', lo: '#336579', glow: '#7fe0f788' },
+    Diamond: { hi: '#ffffff', mid: '#a4deff', lo: '#5557ee', glow: '#8aa4ffaa' }
+  };
+  var seq = 0;
+  function star(cx, cy, ro, ri, n) {
+    var pts = [];
+    for (var i = 0; i < n * 2; i++) { var r = i % 2 ? ri : ro, a = -Math.PI / 2 + i * Math.PI / n; pts.push((cx + r * Math.cos(a)).toFixed(2) + ',' + (cy + r * Math.sin(a)).toFixed(2)); }
+    return pts.join(' ');
+  }
+  ui.badge = function (tier, size) {
+    size = size || 64; var s = TS[tier] || TS.Bronze, id = 'tb' + (++seq);
+    var emblem = tier === 'Diamond'
+      ? '<polygon points="50,30 66,43 50,72 34,43" fill="url(#' + id + 'e)"/><polygon points="34,43 66,43 50,30" fill="#fff" opacity=".55"/><polygon points="34,43 50,72 50,43" fill="#000" opacity=".12"/><path d="M34 43h32M50 30v13" stroke="#fff" stroke-opacity=".6" stroke-width=".8" fill="none"/>'
+      : '<polygon points="' + star(51, 52.5, 21, 9, 5) + '" fill="#000" opacity=".38"/><polygon points="' + star(50, 50, 21, 9, 5) + '" fill="url(#' + id + 'e)" stroke="' + s.lo + '" stroke-opacity=".5" stroke-width=".8"/>';
+    var pips = { Bronze: 1, Silver: 2, Gold: 3, Platinum: 4, Diamond: 5 }[tier] || 1, dots = '';
+    for (var i = 0; i < pips; i++) dots += '<circle cx="' + (50 + (i - (pips - 1) / 2) * 7) + '" cy="80" r="2.2" fill="' + s.hi + '" stroke="' + s.lo + '" stroke-width=".6"/>';
+    var svg = '<svg class="badge3d" style="--glow:' + s.glow + '" width="' + size + '" height="' + Math.round(size * 1.04) + '" viewBox="0 0 100 104" role="img" aria-label="' + tier + ' tier">' +
+      '<defs>' +
+      '<linearGradient id="' + id + 'r" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="' + s.hi + '"/><stop offset=".45" stop-color="' + s.mid + '"/><stop offset="1" stop-color="' + s.lo + '"/></linearGradient>' +
+      '<linearGradient id="' + id + 'f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + s.mid + '"/><stop offset=".55" stop-color="' + s.lo + '"/><stop offset="1" stop-color="' + s.mid + '"/></linearGradient>' +
+      '<linearGradient id="' + id + 'e" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="' + s.hi + '"/><stop offset="1" stop-color="' + s.mid + '"/></linearGradient>' +
+      '<linearGradient id="' + id + 'g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".6"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>' +
+      '</defs>' +
+      '<polygon points="50,3 92,26 92,76 50,100 8,76 8,26" fill="url(#' + id + 'r)"/>' +
+      '<polygon points="50,3 92,26 92,76 50,100 8,76 8,26" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1"/>' +
+      '<polygon points="50,11 84,30 84,72 50,92 16,72 16,30" fill="url(#' + id + 'f)"/>' +
+      '<path d="M16 30L50 11L84 30" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="1.6" stroke-linecap="round"/>' +
+      '<path d="M16 72L50 92L84 72" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="1.6" stroke-linecap="round"/>' +
+      '<path d="M16 30L50 11L84 30L84 46Q50 62 16 46Z" fill="url(#' + id + 'g)"/>' +
+      emblem + dots + '</svg>';
+    return raw(svg);
+  };
+  ui.tierPill = function (tier) {
+    var c = { Bronze: 'gold', Silver: 'gray', Gold: 'gold', Platinum: 'blue', Diamond: 'blue' }[tier] || 'gray';
+    return html`<span class="pill ${c}">${tier}</span>`;
+  };
+  ui.avatar = function (name, sm) { return html`<div class="avatar ${sm ? 'sm' : ''}">${U.initials(name)}</div>`; };
+  ui.empty = function (icon, text) { return html`<div class="empty">${ui.icon(icon || 'info')}<div>${text}</div></div>`; };
+  ui.skeleton = function (n) { var o = ''; for (var i = 0; i < (n || 3); i++) o += '<div class="skeleton" style="height:' + (i ? 84 : 150) + 'px;margin-bottom:12px"></div>'; return raw(o); };
+
+  /* ---------- toast ---------- */
+  ui.toast = function (msg, kind) {
+    var host = document.getElementById('toasts');
+    if (!host) { host = document.createElement('div'); host.id = 'toasts'; host.className = 'toasts'; host.setAttribute('aria-live', 'polite'); document.body.appendChild(host); }
+    var t = document.createElement('div'); t.className = 'toast ' + (kind || ''); t.textContent = msg; host.appendChild(t);
+    setTimeout(function () { t.style.transition = 'opacity .3s'; t.style.opacity = '0'; setTimeout(function () { t.remove(); }, 320); }, kind === 'err' ? 4600 : 2600);
+  };
+  ui.ok = function (m) { ui.toast(m, 'ok'); };
+  function logErr(e) { var bug = e instanceof TypeError || e instanceof ReferenceError || e instanceof SyntaxError || e instanceof RangeError; (bug ? console.error : console.info)(e); }
+  var lastFail = 0;
+  ui.fail = function (e) {
+    logErr(e);
+    var now = Date.now(); if (now - lastFail < 800) return; lastFail = now;
+    ui.toast((EOS.friendly ? EOS.friendly(e) : (e && e.message) || 'Something went wrong'), 'err');
+  };
+
+  /* ---------- modal ---------- */
+  var stack = [];
+  ui.modal = function (o) {
+    var ov = document.createElement('div'); ov.className = 'overlay'; ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-modal', 'true');
+    ov.innerHTML = '<div class="sheet ' + (o.wide ? 'wide' : '') + '"><div class="grab"></div><div class="sheet-head"><h2>' + U.esc(o.title || '') + '</h2><button type="button" class="iconbtn" data-act="modal-close" aria-label="Close">' + ui.icon('x') + '</button></div><div class="sheet-body"></div></div>';
+    var body = ov.querySelector('.sheet-body');
+    var m = {
+      el: ov, body: body,
+      set: function (h) { body.innerHTML = String(h); },
+      close: function (val) { if (m.closed) return; m.closed = true; ov.remove(); stack = stack.filter(function (x) { return x !== m; }); if (!stack.length) document.body.style.overflow = ''; if (o.onClose) o.onClose(val); if (m.resolve) m.resolve(val); }
+    };
+    m.set(o.body || '');
+    ov.addEventListener('click', function (e) { if (e.target === ov) m.close(); });
+    document.body.appendChild(ov); stack.push(m); document.body.style.overflow = 'hidden';
+    if (o.onOpen) o.onOpen(m);
+    var f = ov.querySelector('input:not([type=hidden]),textarea,select'); if (f && !/iPhone|iPad/.test(navigator.userAgent)) f.focus();
+    return m;
+  };
+  ui.topModal = function () { return stack[stack.length - 1] || null; };
+  ui.closeAllModals = function () { stack.slice().forEach(function (m) { m.close(); }); };
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && stack.length) stack[stack.length - 1].close(); });
+  ui.confirm = function (o) {
+    return new Promise(function (resolve) {
+      var m = ui.modal({
+        title: o.title || 'Are you sure?',
+        body: html`<p class="muted">${o.body || ''}</p><div class="row" style="margin-top:18px;justify-content:flex-end"><button type="button" class="btn ghost" data-act="modal-close">${o.cancel || 'Cancel'}</button><button type="button" class="btn ${o.danger ? 'danger' : ''}" data-act="confirm-yes">${o.ok || 'Confirm'}</button></div>`,
+        onClose: function (v) { resolve(v === true); }
+      });
+      m.el.querySelector('[data-act=confirm-yes]').addEventListener('click', function () { m.close(true); });
+    });
+  };
+
+  /* ---------- event delegation ---------- */
+  var actions = {}, forms = {}, changes = {};
+  ui.register = function (a, f, c) { Object.assign(actions, a || {}); Object.assign(forms, f || {}); Object.assign(changes, c || {}); };
+  function busyRun(btn, fn) {
+    if (btn && (btn.disabled || btn.classList.contains('is-busy'))) return Promise.resolve();
+    if (btn) { btn.classList.add('is-busy'); btn.disabled = true; }
+    return Promise.resolve().then(fn).catch(ui.fail).then(function () { if (btn && btn.isConnected) { btn.classList.remove('is-busy'); btn.disabled = false; } });
+  }
+  ui.busy = busyRun;
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-act]') : null; if (!t) return;
+    var name = t.getAttribute('data-act');
+    if (name === 'modal-close') { var tm = ui.topModal(); if (tm) tm.close(); return; }
+    var fn = actions[name]; if (!fn) return;
+    if (t.tagName === 'A' && !t.getAttribute('href')) e.preventDefault();
+    var isBtn = t.tagName === 'BUTTON';
+    busyRun(isBtn ? t : null, function () { return fn(t, e); });
+  });
+  document.addEventListener('submit', function (e) {
+    var f = e.target.closest ? e.target.closest('form[data-form]') : null; if (!f) return;
+    e.preventDefault();
+    var fn = forms[f.getAttribute('data-form')]; if (!fn) return;
+    var btn = f.querySelector('button[type=submit]'); var errBox = f.querySelector('[data-err]'); if (errBox) errBox.classList.add('hidden');
+    var values = {}; new FormData(f).forEach(function (v, k) { values[k] = v; });
+    if (btn && (btn.disabled || btn.classList.contains('is-busy'))) return;
+    if (btn) { btn.classList.add('is-busy'); btn.disabled = true; }
+    Promise.resolve().then(function () { return fn(f, values, e); }).catch(function (err) {
+      logErr(err); var msg = EOS.friendly ? EOS.friendly(err) : err.message;
+      if (errBox) { errBox.textContent = msg; errBox.classList.remove('hidden'); } else ui.toast(msg, 'err');
+    }).then(function () { if (btn && btn.isConnected) { btn.classList.remove('is-busy'); btn.disabled = false; } });
+  });
+  document.addEventListener('change', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-change]') : null; if (!t) return;
+    var fn = changes[t.getAttribute('data-change')]; if (fn) Promise.resolve().then(function () { return fn(t, e); }).catch(ui.fail);
+  });
+
+  /* ---------- boot / fatal ---------- */
+  ui.hideBoot = function () { var b = document.getElementById('boot'); if (b) b.remove(); if (root.__bootTimer) clearTimeout(root.__bootTimer); };
+  ui.fatal = function (err, retry) {
+    var root_ = document.getElementById('root'); if (!root_) return; ui.hideBoot();
+    root_.innerHTML = String(html`<div class="center-screen"><div class="card fatal stack"><h2>Couldn't start EmployeeOS</h2><div class="err">${EOS.friendly ? EOS.friendly(err) : (err && err.message)}</div><p class="muted small">Check your internet connection. If this keeps happening, tell your administrator the message above.</p><button class="btn block" data-act="reload">Try again</button></div></div>`);
+    ui.register({ reload: function () { if (retry) retry(); else location.reload(); } });
+  };
+  var shown = false;
+  root.addEventListener('error', function (e) { if (shown) return; shown = true; setTimeout(function () { shown = false; }, 4000); if (e && e.message) ui.toast('Unexpected error: ' + e.message, 'err'); });
+  root.addEventListener('unhandledrejection', function (e) { ui.fail(e.reason || new Error('Unexpected error')); });
+
+  /* ---------- hash router ---------- */
+  ui.parseHash = function () { var h = (location.hash || '').replace(/^#\/?/, ''); return h ? h.split('/').map(decodeURIComponent) : []; };
+  ui.go = function (path) { var n = '#/' + path; if (location.hash === n) root.dispatchEvent(new Event('hashchange')); else location.hash = n; };
+
+  /* ---------- misc ---------- */
+  ui.fileIcon = function (kind) { return { image: 'image', video: 'play', pdf: 'file', document: 'file', note: 'book', instruction: 'book' }[kind] || 'file'; };
+  ui.form = {
+    lbl: function (text, input, cls) { return html`<label class="lbl ${cls || ''}">${text}${input}</label>`; }
+  };
+  /* Opens a file (resource / chat attachment) in a viewer modal */
+  ui.viewFile = async function (bucket, path, name, mime, title) {
+    var kind = U.fileKind(mime, name);
+    var url = await EOS.db.files.url(bucket, path);
+    var body;
+    if (kind === 'image') body = html`<div class="viewer"><img src="${url}" alt="${name}"></div>`;
+    else if (kind === 'video') body = html`<div class="viewer"><video src="${url}" controls playsinline preload="metadata"></video></div>`;
+    else if (kind === 'pdf') body = html`<div class="viewer"><iframe src="${url}" title="${name}"></iframe></div><p class="muted small" style="margin-top:8px">If the PDF does not show on your phone, use Open in new tab.</p>`;
+    else body = html`<div class="notice">This file type can't be previewed here. Use Download to open it.</div>`;
+    ui.modal({ title: title || name, wide: true, body: html`${body}<div class="row" style="margin-top:14px"><a class="btn ghost sm" href="${url}" target="_blank" rel="noopener">Open in new tab</a><a class="btn sm" href="${url}" download="${name}">${ui.icon('download', 'sm')} Download</a></div>` });
+  };
+
+  if (typeof module !== 'undefined' && module.exports) module.exports = EOS;
+})(typeof window !== 'undefined' ? window : globalThis);
+
+</script>
+<script>
+/*
+ * EmployeeOS data.js - one data-layer API, two interchangeable backends:
+ *
+ *   SUPABASE  (real)    - Auth, Postgres+RLS, Storage, Realtime, Edge Function for user admin.
+ *   LOCAL     (preview) - browser-only emulation of the same API, used ONLY when no Supabase
+ *                         credentials are configured. It enforces the same role rules as the
+ *                         RLS policies so permissions can be exercised in the hosted preview,
+ *                         but its data lives in this browser only.
+ *
+ * App code talks only to EOS.db and never knows which backend is active (except db.mode for labels).
+ */
+(function (root) {
+  'use strict';
+  var EOS = root.EOS = root.EOS || {};
+  var U = EOS.util;
+  var cfg = EOS.config = Object.assign({
+    supabaseUrl: '', supabaseAnonKey: '', employeeEmailDomain: 'employees.employeeos.app', currency: '₹', locale: 'en-IN'
+  }, root.EOS_CONFIG || {});
+  var APP = root.EOS_APP || 'employee';
+  var MODE = (cfg.supabaseUrl && cfg.supabaseAnonKey) ? 'supabase' : 'local';
+  var TABLES = ['profiles', 'work_requests', 'work_sessions', 'earning_entries', 'points_ledger', 'tier_history',
+    'resources', 'messages', 'announcements', 'notifications', 'settings', 'activity_log'];
+  var MAX_UPLOAD = MODE === 'supabase' ? 50 * 1048576 : 20 * 1048576;
+
+  /* ---------- errors ---------- */
+  function friendly(e) {
+    var m = (e && (e.message || e.error_description || e.msg)) || String(e || 'Something went wrong');
+    if (/invalid login credentials/i.test(m)) return 'Incorrect ID/email or password.';
+    if (/row-level security|permission denied|not authorized|not allowed/i.test(m)) return 'You do not have permission to do that.';
+    if (/failed to fetch|networkerror|load failed|network request failed/i.test(m)) return 'Network problem. Check your connection and try again.';
+    if (/duplicate key|already (been )?registered|already exists/i.test(m)) return 'That value already exists (duplicate).';
+    if (/jwt expired/i.test(m)) return 'Your session expired. Please sign in again.';
+    return m;
+  }
+  EOS.friendly = friendly;
+  function fail(msg) { var e = new Error(msg); e.friendly = true; return e; }
+
+  function parseOrder(o) {
+    if (!o) return [];
+    return (Array.isArray(o) ? o : [o]).map(function (s) { var a = String(s).split('.'); return [a[0], a[1] !== 'desc']; });
+  }
+  function loadScript(src) {
+    return new Promise(function (res, rej) {
+      var s = document.createElement('script'); s.src = src; s.async = true;
+      s.onload = res; s.onerror = function () { rej(new Error('script failed: ' + src)); };
+      document.head.appendChild(s);
+    });
+  }
+
+  /* validation shared by both backends */
+  var V = {
+    employee: function (p, creating) {
+      if (creating || p.employee_code !== undefined) if (!/^[A-Za-z0-9_-]{3,20}$/.test(String(p.employee_code || ''))) throw fail('Employee ID must be 3-20 letters, numbers, - or _.');
+      if (creating || p.full_name !== undefined) if (String(p.full_name || '').trim().length < 2) throw fail('Enter the employee name.');
+      if (creating || p.password) if (String(p.password || '').length < 8) throw fail('Password must be at least 8 characters.');
+      if (p.monthly_base_salary !== undefined && !(Number(p.monthly_base_salary) >= 0)) throw fail('Salary must be zero or more.');
+      if (p.email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(p.email)) throw fail('Enter a valid email or leave it blank.');
+    }
+  };
+
+  /* =====================================================================
+   *  LOCAL (preview) backend
+   * ===================================================================== */
+  function LocalDB() {
+    var KEY = 'eos_preview_v1', SKEY = 'eos_session_' + APP;
+    var mem = null, memSession = null, useMem = false, subs = [], me = null;
+    var memFiles = {}, urlCache = {};
+
+    function blank() { var t = {}; TABLES.forEach(function (n) { t[n] = []; }); return { v: 1, t: t, users: [] }; }
+    function load() {
+      if (useMem) return mem;
+      var s = null;
+      try { s = root.localStorage.getItem(KEY); } catch (e) { useMem = true; mem = mem || blank(); return mem; }
+      if (!s) return blank();
+      try { return JSON.parse(s); } catch (e) { return blank(); }
+    }
+    function save(st) {
+      if (useMem) { mem = st; return; }
+      try { root.localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) { useMem = true; mem = st; }
+    }
+    function getSession() {
+      if (useMem) return memSession;
+      try { return root.localStorage.getItem(SKEY); } catch (e) { return memSession; }
+    }
+    function setSession(id) {
+      memSession = id;
+      try { if (id) root.localStorage.setItem(SKEY, id); else root.localStorage.removeItem(SKEY); } catch (e) { /* memory only */ }
+    }
+    function notify(table) { subs.slice().forEach(function (s) { if (!table || table === '*' || s.tables.indexOf(table) >= 0) { try { s.cb(table || '*'); } catch (e) { console.error(e); } } }); }
+    root.addEventListener && root.addEventListener('storage', function (e) { if (e.key === KEY) notify('*'); });
+
+    /* ----- hashing (preview only: PBKDF2 when WebCrypto exists, weak fallback otherwise) ----- */
+    function hex(buf) { return Array.prototype.map.call(new Uint8Array(buf), function (b) { return ('0' + b.toString(16)).slice(-2); }).join(''); }
+    function weak(str) { var h = 5381; for (var i = 0; i < str.length; i++) h = ((h << 5) + h + str.charCodeAt(i)) | 0; return (h >>> 0).toString(16); }
+    function hashPw(pw, salt) {
+      try {
+        if (root.crypto && root.crypto.subtle && root.TextEncoder) {
+          var enc = new TextEncoder();
+          return root.crypto.subtle.importKey('raw', enc.encode(pw), 'PBKDF2', false, ['deriveBits']).then(function (k) {
+            return root.crypto.subtle.deriveBits({ name: 'PBKDF2', salt: enc.encode(salt), iterations: 60000, hash: 'SHA-256' }, k, 256);
+          }).then(function (bits) { return 'p1:' + hex(bits); }, function () { return 'f1:' + weak(salt + ':' + pw); });
+        }
+      } catch (e) { /* fall through */ }
+      return Promise.resolve('f1:' + weak(salt + ':' + pw));
+    }
+
+    /* ----- policies mirroring supabase/schema.sql ----- */
+    function isAdmin(u) { return !!u && u.role === 'admin' && u.status === 'active'; }
+    function active(u) { return !!u && u.status === 'active'; }
+    function own(u, r) { return active(u) && (isAdmin(u) || r.employee_id === u.id); }
+    function adminOnly(u) { return isAdmin(u); }
+    var POL = {
+      profiles: { r: function (u, r) { return active(u) && (isAdmin(u) || r.id === u.id); }, w: adminOnly },
+      work_requests: { r: own, w: function (u, op, r) { return isAdmin(u) || (op === 'insert' && active(u) && r.employee_id === u.id && r.status === 'pending'); } },
+      work_sessions: { r: own, w: adminOnly },
+      earning_entries: { r: own, w: adminOnly },
+      points_ledger: { r: own, w: adminOnly },
+      tier_history: { r: own, w: adminOnly },
+      resources: { r: function (u) { return active(u); }, w: adminOnly },
+      messages: { r: own, w: function (u, op, r) { return isAdmin(u) || (op === 'insert' && active(u) && r.employee_id === u.id && r.sender_role === 'employee' && r.sender_id === u.id); } },
+      announcements: { r: function (u) { return active(u); }, w: adminOnly },
+      notifications: { r: function (u, r) { return active(u) && (isAdmin(u) || r.user_id === u.id); },
+        w: function (u, op, r, patch) { if (isAdmin(u)) return true; return op === 'update' && active(u) && r.user_id === u.id && Object.keys(patch || {}).every(function (k) { return k === 'read_at'; }); } },
+      settings: { r: function (u) { return active(u); }, w: adminOnly },
+      activity_log: { r: function (u) { return isAdmin(u); }, w: function (u, op, r) { return isAdmin(u) || (op === 'insert' && active(u) && r.actor_id === u.id); } }
+    };
+    var DEFAULTS = {
+      work_requests: function () { return { status: 'pending', requested_at: new Date().toISOString() }; },
+      messages: function () { return { read_at: null }; },
+      notifications: function () { return { read_at: null }; },
+      profiles: function () { return { status: 'active', role: 'employee', monthly_base_salary: 0, tier: 'Bronze', tier_override: null }; }
+    };
+
+    function curUser(st) {
+      var id = getSession(); if (!id) return null;
+      var p = st.t.profiles.filter(function (x) { return x.id === id; })[0];
+      return p || null;
+    }
+    function requireUser(st) { var u = curUser(st); if (!u) throw fail('You are not signed in.'); if (u.status !== 'active') throw fail('This account is suspended.'); return u; }
+
+    function matcher(o) {
+      o = o || {};
+      return function (r) {
+        var k, v;
+        for (k in (o.eq || {})) { v = o.eq[k]; if (v === null) { if (r[k] != null) return false; } else if (r[k] !== v) return false; }
+        for (k in (o.neq || {})) { if (r[k] === o.neq[k]) return false; }
+        for (k in (o.gte || {})) { if (r[k] == null || !(r[k] >= o.gte[k])) return false; }
+        for (k in (o.gt || {})) { if (r[k] == null || !(r[k] > o.gt[k])) return false; }
+        for (k in (o.lte || {})) { if (r[k] == null || !(r[k] <= o.lte[k])) return false; }
+        for (k in (o.lt || {})) { if (r[k] == null || !(r[k] < o.lt[k])) return false; }
+        for (k in (o.in || {})) { if (o.in[k].indexOf(r[k]) < 0) return false; }
+        if (o.notnull) for (var i = 0; i < o.notnull.length; i++) if (r[o.notnull[i]] == null) return false;
+        return true;
+      };
+    }
+    function sortRows(rows, order) {
+      var ord = parseOrder(order); if (!ord.length) return rows;
+      return rows.slice().sort(function (a, b) {
+        for (var i = 0; i < ord.length; i++) {
+          var c = ord[i][0], asc = ord[i][1], x = a[c], y = b[c];
+          if (x === y) continue; if (x == null) return 1; if (y == null) return -1;
+          return (x < y ? -1 : 1) * (asc ? 1 : -1);
+        }
+        return 0;
+      });
+    }
+
+    var api = {
+      mode: 'local',
+      list: function (table, o) {
+        return Promise.resolve().then(function () {
+          var st = load(), u = requireUser(st), pol = POL[table]; if (!pol) throw fail('Unknown table ' + table);
+          var rows = st.t[table].filter(matcher(o)).filter(function (r) { return pol.r(u, r); });
+          rows = sortRows(rows, o && o.order); if (o && o.limit) rows = rows.slice(0, o.limit);
+          return U.clone(rows);
+        });
+      },
+      insert: function (table, rows) {
+        return Promise.resolve().then(function () {
+          var st = load(), u = requireUser(st), pol = POL[table]; if (!pol) throw fail('Unknown table ' + table);
+          var arr = Array.isArray(rows) ? rows : [rows], out = [];
+          arr.forEach(function (r) {
+            var row = Object.assign({ id: U.uid(), created_at: new Date().toISOString() }, DEFAULTS[table] ? DEFAULTS[table]() : {}, U.clone(r));
+            if (table === 'settings') row = Object.assign({}, U.clone(r), { updated_at: new Date().toISOString() });
+            if (!pol.w(u, 'insert', row)) throw fail('new row violates row-level security policy for table "' + table + '"');
+            if (table === 'profiles' && row.employee_code && st.t.profiles.some(function (p) { return p.employee_code && p.employee_code.toLowerCase() === row.employee_code.toLowerCase(); })) throw fail('duplicate key: employee ID already exists');
+            if (table === 'settings' && st.t.settings.some(function (s) { return s.key === row.key; })) throw fail('duplicate key: setting exists');
+            st.t[table].push(row); out.push(row);
+          });
+          save(st); notify(table); return U.clone(out);
+        });
+      },
+      update: function (table, o, patch) {
+        return Promise.resolve().then(function () {
+          var st = load(), u = requireUser(st), pol = POL[table], m = matcher(o), out = [];
+          st.t[table].forEach(function (r) {
+            if (m(r) && pol.r(u, r) && pol.w(u, 'update', r, patch)) { Object.assign(r, U.clone(patch)); if (table === 'settings') r.updated_at = new Date().toISOString(); out.push(r); }
+          });
+          if (out.length) { save(st); notify(table); }
+          return U.clone(out);
+        });
+      },
+      remove: function (table, o) {
+        return Promise.resolve().then(function () {
+          var st = load(), u = requireUser(st), pol = POL[table], m = matcher(o), out = [];
+          st.t[table] = st.t[table].filter(function (r) {
+            if (m(r) && pol.r(u, r) && pol.w(u, 'delete', r)) { out.push(r); return false; } return true;
+          });
+          if (out.length) { save(st); notify(table); }
+          return U.clone(out);
+        });
+      },
+      rpc: function (name, args) {
+        args = args || {};
+        return Promise.resolve().then(function () {
+          var st = load(), u = requireUser(st);
+          if (name === 'leaderboard') {
+            var since = args.p_since ? new Date(args.p_since).getTime() : null;
+            return st.t.profiles.filter(function (p) { return p.role === 'employee' && p.status === 'active'; }).map(function (p) {
+              var pts = st.t.points_ledger.filter(function (l) { return l.employee_id === p.id && (since == null || new Date(l.created_at).getTime() >= since); })
+                .reduce(function (a, l) { return a + Number(l.points); }, 0);
+              return { employee_id: p.id, employee_code: p.employee_code, full_name: p.full_name, tier: p.tier, points: pts };
+            }).sort(function (a, b) { return b.points - a.points || (a.full_name < b.full_name ? -1 : 1); });
+          }
+          if (name === 'mark_read') {
+            var emp = args.p_employee, changed = false;
+            if (!isAdmin(u) && u.id !== emp) throw fail('not allowed');
+            var from = isAdmin(u) ? 'employee' : 'admin';
+            st.t.messages.forEach(function (m) { if (m.employee_id === emp && m.sender_role === from && !m.read_at) { m.read_at = new Date().toISOString(); changed = true; } });
+            if (changed) { save(st); notify('messages'); }
+            return null;
+          }
+          if (name === 'update_my_profile') {
+            var p = st.t.profiles.filter(function (x) { return x.id === u.id; })[0];
+            var phone = String(args.p_phone == null ? '' : args.p_phone).trim().slice(0, 30);
+            p.phone = phone; save(st); notify('profiles'); return null;
+          }
+          throw fail('Unknown function ' + name);
+        });
+      },
+      subscribe: function (tables, cb) {
+        var s = { tables: tables, cb: cb }; subs.push(s);
+        return function () { subs = subs.filter(function (x) { return x !== s; }); };
+      },
+
+      /* ----- auth ----- */
+      auth: {
+        init: function () {
+          return Promise.resolve().then(function () {
+            var st = load(), u = curUser(st);
+            if (u && u.status !== 'active') { setSession(null); return null; }
+            me = u; return U.clone(u);
+          });
+        },
+        needsSetup: function () { return Promise.resolve(!load().t.profiles.some(function (p) { return p.role === 'admin'; })); },
+        setupAdmin: function (p) {
+          return Promise.resolve().then(function () {
+            var st = load();
+            if (st.t.profiles.some(function (x) { return x.role === 'admin'; })) throw fail('An admin already exists.');
+            if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(p.email || '')) throw fail('Enter a valid email.');
+            if (String(p.name || '').trim().length < 2) throw fail('Enter your name.');
+            if (String(p.password || '').length < 8) throw fail('Password must be at least 8 characters.');
+            var salt = U.uid(), id = U.uid();
+            return hashPw(p.password, salt).then(function (h) {
+              st = load();
+              st.users.push({ id: id, login: p.email.trim().toLowerCase(), salt: salt, hash: h });
+              st.t.profiles.push({ id: id, employee_code: null, full_name: p.name.trim(), email: p.email.trim(), phone: '', role: 'admin', status: 'active', monthly_base_salary: 0, tier: 'Bronze', tier_override: null, created_at: new Date().toISOString() });
+              save(st); setSession(id); me = curUser(st); notify('*'); return U.clone(me);
+            });
+          });
+        },
+        signIn: function (identifier, password) {
+          var st = load(), login = String(identifier || '').trim().toLowerCase();
+          var user = st.users.filter(function (x) { return x.login === login; })[0];
+          if (!user) return hashPw(password || '', 'x').then(function () { throw fail('Incorrect ID/email or password.'); });
+          return hashPw(password || '', user.salt).then(function (h) {
+            if (h !== user.hash) throw fail('Incorrect ID/email or password.');
+            var p = load().t.profiles.filter(function (x) { return x.id === user.id; })[0];
+            if (!p) throw fail('Account not provisioned.');
+            if (p.status !== 'active') throw fail('This account is suspended. Contact your admin.');
+            setSession(user.id); me = p; return U.clone(p);
+          });
+        },
+        signOut: function () { setSession(null); me = null; return Promise.resolve(); },
+        changePassword: function (pw) {
+          return Promise.resolve().then(function () {
+            if (String(pw || '').length < 8) throw fail('Password must be at least 8 characters.');
+            var st = load(), u = requireUser(st), salt = U.uid();
+            return hashPw(pw, salt).then(function (h) {
+              st = load(); var usr = st.users.filter(function (x) { return x.id === u.id; })[0];
+              usr.salt = salt; usr.hash = h; save(st);
+            });
+          });
+        }
+      },
+
+      /* ----- admin user management (Supabase: Edge Function; here: local) ----- */
+      admin: {
+        createEmployee: function (p) {
+          return Promise.resolve().then(function () {
+            var st = load(), u = requireUser(st); if (!isAdmin(u)) throw fail('Admins only.');
+            V.employee(p, true);
+            var login = p.employee_code.toLowerCase();
+            if (st.users.some(function (x) { return x.login === login; })) throw fail('duplicate key: that Employee ID already exists');
+            var salt = U.uid(), id = U.uid();
+            return hashPw(p.password, salt).then(function (h) {
+              st = load();
+              st.users.push({ id: id, login: login, salt: salt, hash: h });
+              var prof = Object.assign({ id: id, created_at: new Date().toISOString(), email: p.email || '', phone: p.phone || '' }, DEFAULTS.profiles(),
+                { employee_code: p.employee_code, full_name: p.full_name.trim(), monthly_base_salary: Number(p.monthly_base_salary) || 0 });
+              st.t.profiles.push(prof); save(st); notify('profiles'); return U.clone(prof);
+            });
+          });
+        },
+        updateEmployee: function (id, patch, password) {
+          return Promise.resolve().then(function () {
+            var st = load(), u = requireUser(st); if (!isAdmin(u)) throw fail('Admins only.');
+            var prof = st.t.profiles.filter(function (x) { return x.id === id && x.role === 'employee'; })[0]; if (!prof) throw fail('Employee not found.');
+            V.employee(Object.assign({}, patch, password ? { password: password } : {}), false);
+            if (patch.status && ['active', 'suspended'].indexOf(patch.status) < 0) throw fail('Invalid status.');
+            var usr = st.users.filter(function (x) { return x.id === id; })[0];
+            if (patch.employee_code && patch.employee_code.toLowerCase() !== (prof.employee_code || '').toLowerCase()) {
+              if (st.users.some(function (x) { return x.login === patch.employee_code.toLowerCase(); })) throw fail('duplicate key: that Employee ID already exists');
+              usr.login = patch.employee_code.toLowerCase();
+            }
+            var allowed = U.pick(patch, ['employee_code', 'full_name', 'phone', 'email', 'monthly_base_salary', 'status']);
+            if (allowed.monthly_base_salary !== undefined) allowed.monthly_base_salary = Number(allowed.monthly_base_salary);
+            Object.assign(prof, allowed);
+            var done = function () { save(st); notify('profiles'); return U.clone(prof); };
+            if (password) { var salt = U.uid(); return hashPw(password, salt).then(function (h) { usr.salt = salt; usr.hash = h; return done(); }); }
+            return done();
+          });
+        },
+        deleteEmployee: function (id) {
+          return Promise.resolve().then(function () {
+            var st = load(), u = requireUser(st); if (!isAdmin(u)) throw fail('Admins only.');
+            var prof = st.t.profiles.filter(function (x) { return x.id === id && x.role === 'employee'; })[0]; if (!prof) throw fail('Employee not found.');
+            st.t.profiles = st.t.profiles.filter(function (x) { return x.id !== id; });
+            st.users = st.users.filter(function (x) { return x.id !== id; });
+            ['work_requests', 'work_sessions', 'earning_entries', 'points_ledger', 'tier_history', 'messages'].forEach(function (t) { st.t[t] = st.t[t].filter(function (r) { return r.employee_id !== id; }); });
+            st.t.notifications = st.t.notifications.filter(function (r) { return r.user_id !== id; });
+            st.t.activity_log = st.t.activity_log.filter(function (r) { return r.employee_id !== id; });
+            save(st); notify('*'); return true;
+          });
+        }
+      },
+
+      /* ----- files (IndexedDB, memory fallback) ----- */
+      files: {
+        max: MAX_UPLOAD,
+        upload: function (bucket, file, folder) {
+          return Promise.resolve().then(function () {
+            requireUser(load());
+            if (file.size > MAX_UPLOAD) throw fail('File is too large (max ' + U.fmtSize(MAX_UPLOAD) + ').');
+            var safe = String(file.name || 'file').replace(/[^A-Za-z0-9._-]+/g, '_').slice(-80);
+            var path = (folder ? folder + '/' : '') + U.uid().slice(0, 8) + '-' + safe;
+            var rec = { blob: file, type: file.type || 'application/octet-stream' };
+            return idbPut(bucket + '/' + path, rec).then(function () { return { path: path, name: file.name, type: rec.type, size: file.size }; });
+          });
+        },
+        url: function (bucket, path) {
+          var k = bucket + '/' + path;
+          if (urlCache[k]) return Promise.resolve(urlCache[k]);
+          return idbGet(k).then(function (rec) {
+            if (!rec) throw fail('File not found in this browser.');
+            var blob = rec.blob instanceof Blob ? rec.blob : new Blob([rec.blob], { type: rec.type });
+            return (urlCache[k] = URL.createObjectURL(blob));
+          });
+        },
+        remove: function (bucket, path) { return idbDel(bucket + '/' + path).catch(function () {}); }
+      },
+      /* preview-only utilities */
+      resetPreview: function () { try { root.localStorage.removeItem(KEY); root.localStorage.removeItem('eos_session_admin'); root.localStorage.removeItem('eos_session_employee'); } catch (e) {} mem = null; useMem = false; setSession(null); notify('*'); }
+    };
+
+    function idb() {
+      return new Promise(function (res, rej) {
+        if (!root.indexedDB) return rej(new Error('noidb'));
+        var r; try { r = root.indexedDB.open('eos_files', 1); } catch (e) { return rej(e); }
+        r.onupgradeneeded = function () { r.result.createObjectStore('f'); };
+        r.onsuccess = function () { res(r.result); }; r.onerror = function () { rej(r.error); };
+      });
+    }
+    function idbPut(k, v) {
+      return idb().then(function (d) { return new Promise(function (res, rej) { var t = d.transaction('f', 'readwrite'); t.objectStore('f').put(v, k); t.oncomplete = function () { res(); }; t.onerror = function () { rej(t.error); }; }); })
+        .catch(function () { memFiles[k] = v; });
+    }
+    function idbGet(k) {
+      if (memFiles[k]) return Promise.resolve(memFiles[k]);
+      return idb().then(function (d) { return new Promise(function (res, rej) { var q = d.transaction('f').objectStore('f').get(k); q.onsuccess = function () { res(q.result); }; q.onerror = function () { rej(q.error); }; }); }).catch(function () { return memFiles[k]; });
+    }
+    function idbDel(k) {
+      delete memFiles[k];
+      return idb().then(function (d) { return new Promise(function (res) { var t = d.transaction('f', 'readwrite'); t.objectStore('f').delete(k); t.oncomplete = res; t.onerror = res; }); });
+    }
+    return api;
+  }
+
+  /* =====================================================================
+   *  SUPABASE backend
+   * ===================================================================== */
+  function SupabaseDB() {
+    var sb = null, me = null, signedCache = {};
+    var LIB_URLS = ['https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js',
+      'https://unpkg.com/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js'];
+
+    function ensure() {
+      if (sb) return Promise.resolve(sb);
+      var p = root.supabase && root.supabase.createClient ? Promise.resolve() :
+        loadScript(LIB_URLS[0]).catch(function () { return loadScript(LIB_URLS[1]); });
+      return p.then(function () {
+        if (!root.supabase || !root.supabase.createClient) throw fail('Could not load the backend library. Check your connection and reload.');
+        sb = root.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey, {
+          auth: { storageKey: 'eos-' + APP + '-auth', persistSession: true, autoRefreshToken: true, detectSessionInUrl: false }
+        });
+        return sb;
+      }, function () { throw fail('Could not load the backend library. Check your connection and reload.'); });
+    }
+    function check(r) { if (r.error) { var e = new Error(friendly(r.error)); e.friendly = true; e.raw = r.error; throw e; } return r.data; }
+    function filters(q, o) {
+      o = o || {}; var k;
+      for (k in (o.eq || {})) q = o.eq[k] === null ? q.is(k, null) : q.eq(k, o.eq[k]);
+      for (k in (o.neq || {})) q = q.neq(k, o.neq[k]);
+      for (k in (o.gte || {})) q = q.gte(k, o.gte[k]);
+      for (k in (o.gt || {})) q = q.gt(k, o.gt[k]);
+      for (k in (o.lte || {})) q = q.lte(k, o.lte[k]);
+      for (k in (o.lt || {})) q = q.lt(k, o.lt[k]);
+      for (k in (o.in || {})) q = q.in(k, o.in[k]);
+      (o.notnull || []).forEach(function (c) { q = q.not(c, 'is', null); });
+      return q;
+    }
+    function fn(body) {
+      return ensure().then(function () { return sb.functions.invoke('admin-users', { body: body }); }).then(function (r) {
+        if (r.error) {
+          var m = r.error.message;
+          if (r.error.context && r.error.context.json) return r.error.context.json().then(function (j) { throw fail((j && j.error) || m); }, function () { throw fail(m); });
+          throw fail(m);
+        }
+        if (r.data && r.data.error) throw fail(r.data.error);
+        return r.data;
+      });
+    }
+    function profileFor(id) {
+      return sb.from('profiles').select('*').eq('id', id).maybeSingle().then(function (r) { return check(r); });
+    }
+
+    var api = {
+      mode: 'supabase',
+      list: function (table, o) {
+        return ensure().then(function () {
+          var q = filters(sb.from(table).select('*'), o);
+          parseOrder(o && o.order).forEach(function (x) { q = q.order(x[0], { ascending: x[1] }); });
+          if (o && o.limit) q = q.limit(o.limit);
+          return q;
+        }).then(check);
+      },
+      insert: function (table, rows, opts) {
+        return ensure().then(function () { var q = sb.from(table).insert(rows); return (opts && opts.quiet) ? q : q.select(); }).then(check);
+      },
+      update: function (table, o, patch) { return ensure().then(function () { return filters(sb.from(table).update(patch), o).select(); }).then(check); },
+      remove: function (table, o) { return ensure().then(function () { return filters(sb.from(table).delete(), o).select(); }).then(check); },
+      rpc: function (name, args) { return ensure().then(function () { return sb.rpc(name, args || {}); }).then(check); },
+      subscribe: function (tables, cb) {
+        var ch = null, dead = false;
+        ensure().then(function () {
+          if (dead) return;
+          ch = sb.channel('eos-' + U.uid());
+          tables.forEach(function (t) { ch.on('postgres_changes', { event: '*', schema: 'public', table: t }, function () { cb(t); }); });
+          ch.subscribe();
+        }).catch(function () { /* polling fallback in app */ });
+        return function () { dead = true; try { if (ch) sb.removeChannel(ch); } catch (e) {} };
+      },
+      auth: {
+        init: function () {
+          return ensure().then(function () { return sb.auth.getSession(); }).then(function (r) {
+            var s = r.data && r.data.session; if (!s) return null;
+            return profileFor(s.user.id).then(function (p) {
+              if (!p || p.status !== 'active') { return sb.auth.signOut().then(function () { return null; }); }
+              me = p; return p;
+            });
+          }).catch(function (e) { if (e && e.friendly) throw e; return null; });
+        },
+        needsSetup: function () { return Promise.resolve(false); },
+        setupAdmin: function () { return Promise.reject(fail('Create the first admin in Supabase (see README).')); },
+        signIn: function (identifier, password) {
+          var id = String(identifier || '').trim(); if (!id || !password) return Promise.reject(fail('Enter your ID/email and password.'));
+          var email = id.indexOf('@') >= 0 ? id : id.toLowerCase() + '@' + cfg.employeeEmailDomain;
+          return ensure().then(function () { return sb.auth.signInWithPassword({ email: email, password: password }); }).then(check).then(function (d) {
+            return profileFor(d.user.id).then(function (p) {
+              if (!p) return sb.auth.signOut().then(function () { throw fail('Your account is not set up yet. Contact your admin.'); });
+              if (p.status !== 'active') return sb.auth.signOut().then(function () { throw fail('This account is suspended. Contact your admin.'); });
+              me = p; return p;
+            });
+          });
+        },
+        signOut: function () { me = null; return ensure().then(function () { return sb.auth.signOut(); }).then(function () {}, function () {}); },
+        changePassword: function (pw) {
+          if (String(pw || '').length < 8) return Promise.reject(fail('Password must be at least 8 characters.'));
+          return ensure().then(function () { return sb.auth.updateUser({ password: pw }); }).then(check).then(function () {});
+        }
+      },
+      admin: {
+        createEmployee: function (p) { V.employee(p, true); return fn({ action: 'create', employee: p }).then(function (d) { return d.profile; }); },
+        updateEmployee: function (id, patch, password) { V.employee(Object.assign({}, patch, password ? { password: password } : {}), false); return fn({ action: 'update', id: id, patch: patch, password: password || null }).then(function (d) { return d.profile; }); },
+        deleteEmployee: function (id) { return fn({ action: 'delete', id: id }).then(function () { return true; }); }
+      },
+      files: {
+        max: MAX_UPLOAD,
+        upload: function (bucket, file, folder) {
+          if (file.size > MAX_UPLOAD) return Promise.reject(fail('File is too large (max ' + U.fmtSize(MAX_UPLOAD) + ').'));
+          var safe = String(file.name || 'file').replace(/[^A-Za-z0-9._-]+/g, '_').slice(-80);
+          var path = (folder ? folder + '/' : '') + U.uid().slice(0, 8) + '-' + safe;
+          return ensure().then(function () { return sb.storage.from(bucket).upload(path, file, { contentType: file.type || 'application/octet-stream', upsert: false }); })
+            .then(check).then(function () { return { path: path, name: file.name, type: file.type || 'application/octet-stream', size: file.size }; });
+        },
+        url: function (bucket, path) {
+          var k = bucket + '/' + path, c = signedCache[k];
+          if (c && c.exp > Date.now()) return Promise.resolve(c.url);
+          return ensure().then(function () { return sb.storage.from(bucket).createSignedUrl(path, 3600); }).then(check).then(function (d) {
+            signedCache[k] = { url: d.signedUrl, exp: Date.now() + 50 * 60000 }; return d.signedUrl;
+          });
+        },
+        remove: function (bucket, path) { return ensure().then(function () { return sb.storage.from(bucket).remove([path]); }).then(function () {}, function () {}); }
+      }
+    };
+    return api;
+  }
+
+  var impl = MODE === 'supabase' ? SupabaseDB() : LocalDB();
+  EOS.db = impl;
+  EOS.db.cfg = cfg;
+  EOS.db.app = APP;
+  EOS.db.TABLES = TABLES;
+  EOS.db.validate = V;
+  if (typeof module !== 'undefined' && module.exports) module.exports = EOS;
+})(typeof window !== 'undefined' ? window : globalThis);
+
+</script>
+<script>
+/*
+ * EmployeeOS engine.js - business rules.
+ * Pure functions (pay, tiers, ranking, summaries) are unit-tested in tests/engine.test.js.
+ * Async functions talk to EOS.db only; they never know which backend is active.
+ *
+ * RULES THAT MATTER
+ *  - Daily pay      = (monthly base salary / working_days) * min(hours worked that day / standard_hours, 1)
+ *  - Session start  = moment the admin APPROVES the start request.
+ *  - Session end    = moment the employee REQUESTED leave (so a late approval never inflates hours).
+ *  - Points         = hours * per_hour  (+ attendance_day points once per day with >= min hours) + manual adjustments.
+ *  - Tier           = highest tier whose threshold <= points earned in the last `window_days` (so tiers can fall).
+ *                     A manual admin override pins the tier until the admin switches back to Automatic.
+ *  - Promotion bonus is paid once per tier per employee.
+ */
+(function (root) {
+  'use strict';
+  var EOS = root.EOS = root.EOS || {};
+  var U = EOS.util;
+  var E = EOS.engine = {};
+  function db() { return EOS.db; }
+  function fail(m) { var e = new Error(m); e.friendly = true; return e; }
+
+  E.TIERS = ['Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond'];
+  E.DEFAULT_RULES = {
+    pay: { working_days: 26, standard_hours: 8 },
+    points: { per_hour: 10, attendance_day: 20, min_hours_for_attendance: 4 },
+    tiers: { window_days: 30, thresholds: { Bronze: 0, Silver: 300, Gold: 800, Platinum: 1600, Diamond: 2400 } },
+    rewards: { promotion_bonus: { Silver: 200, Gold: 500, Platinum: 1000, Diamond: 2000 }, monthly_top: [1000, 600, 300] }
+  };
+  E.mergeRules = function (saved) {
+    var d = U.clone(E.DEFAULT_RULES); saved = saved || {};
+    ['pay', 'points'].forEach(function (k) { Object.assign(d[k], saved[k] || {}); });
+    if (saved.tiers) { d.tiers.window_days = saved.tiers.window_days != null ? saved.tiers.window_days : d.tiers.window_days; Object.assign(d.tiers.thresholds, saved.tiers.thresholds || {}); }
+    if (saved.rewards) { Object.assign(d.rewards.promotion_bonus, saved.rewards.promotion_bonus || {}); if (Array.isArray(saved.rewards.monthly_top)) d.rewards.monthly_top = saved.rewards.monthly_top.slice(0, 10); }
+    d.tiers.thresholds.Bronze = 0;
+    return d;
+  };
+  E.validateRules = function (r) {
+    function n(v, name, min, max) { v = Number(v); if (!isFinite(v) || v < min || (max != null && v > max)) throw fail(name + ' must be between ' + min + ' and ' + (max == null ? 'any' : max) + '.'); }
+    n(r.pay.working_days, 'Working days per month', 1, 31); n(r.pay.standard_hours, 'Standard hours per day', 1, 24);
+    n(r.points.per_hour, 'Points per hour', 0, 10000); n(r.points.attendance_day, 'Attendance points', 0, 10000); n(r.points.min_hours_for_attendance, 'Minimum hours for attendance', 0, 24);
+    n(r.tiers.window_days, 'Tier window (days)', 1, 365);
+    var prev = 0;
+    E.TIERS.slice(1).forEach(function (t) { var v = Number(r.tiers.thresholds[t]); n(v, t + ' threshold', 1, 10000000); if (v <= prev) throw fail('Tier thresholds must increase: ' + t + ' must be above the previous tier.'); prev = v; });
+    E.TIERS.slice(1).forEach(function (t) { n(r.rewards.promotion_bonus[t], t + ' promotion bonus', 0, 10000000); });
+    r.rewards.monthly_top.forEach(function (v, i) { n(v, 'Monthly reward #' + (i + 1), 0, 10000000); });
+    return true;
+  };
+
+  /* ---------- pure helpers ---------- */
+  E.dailyRate = function (salary, rules) { return U.round2((Number(salary) || 0) / rules.pay.working_days); };
+  E.dayPay = function (salary, rules, hours) {
+    var f = Math.min(Math.max(Number(hours) || 0, 0) / rules.pay.standard_hours, 1);
+    return U.round2(E.dailyRate(salary, rules) * f);
+  };
+  E.tierIndex = function (t) { return Math.max(0, E.TIERS.indexOf(t)); };
+  E.tierForPoints = function (pts, rules) {
+    var t = 'Bronze';
+    E.TIERS.forEach(function (n) { if (pts >= rules.tiers.thresholds[n]) t = n; });
+    return t;
+  };
+  E.tierProgress = function (pts, tier, rules) {
+    var i = E.tierIndex(tier), next = E.TIERS[i + 1] || null;
+    if (!next) return { next: null, pct: 100, remaining: 0, nextAt: null };
+    var lo = rules.tiers.thresholds[tier], hi = rules.tiers.thresholds[next];
+    var pct = Math.max(0, Math.min(100, Math.round((pts - lo) / Math.max(1, hi - lo) * 100)));
+    return { next: next, pct: pct, remaining: Math.max(0, hi - pts), nextAt: hi };
+  };
+  E.level = function (xp) { xp = Math.max(0, Number(xp) || 0); var per = 200; return { level: Math.floor(xp / per) + 1, into: xp % per, per: per, pct: Math.round((xp % per) / per * 100) }; };
+  E.rankRows = function (rows) {
+    var s = rows.slice().sort(function (a, b) { return (b.points - a.points) || String(a.full_name).localeCompare(String(b.full_name)); });
+    var rank = 0, prev = null;
+    s.forEach(function (r, i) { if (prev === null || r.points !== prev) rank = i + 1; r.rank = rank; prev = r.points; });
+    return s;
+  };
+  E.periodSince = function (period, now) {
+    now = now || new Date();
+    if (period === 'daily') return U.startOfDay(now).toISOString();
+    if (period === 'weekly') return U.startOfWeek(now).toISOString();
+    if (period === 'monthly') return U.startOfMonth(now).toISOString();
+    return null;
+  };
+  function bucket(list) {
+    var b = { daily: 0, extra: 0, bonus: 0, deduction: 0 };
+    list.forEach(function (e) { if (b[e.entry_type] !== undefined) b[e.entry_type] += Number(e.amount) || 0; });
+    Object.keys(b).forEach(function (k) { b[k] = U.round2(b[k]); });
+    b.net = U.round2(b.daily + b.extra + b.bonus - b.deduction);
+    return b;
+  }
+  E.bucket = bucket;
+  E.summarize = function (entries, sessions, monthKey, todayKey) {
+    var m = entries.filter(function (e) { return String(e.entry_date).slice(0, 7) === monthKey; });
+    var t = entries.filter(function (e) { return String(e.entry_date).slice(0, 10) === todayKey; });
+    var ms = sessions.filter(function (s) { return s.ended_at && String(s.work_date).slice(0, 7) === monthKey; });
+    var ts = sessions.filter(function (s) { return s.ended_at && String(s.work_date).slice(0, 10) === todayKey; });
+    var month = bucket(m); month.hours = U.round2(U.sum(ms, function (s) { return s.hours; }));
+    month.days = Object.keys(U.groupBy(ms.filter(function (s) { return Number(s.hours) > 0; }), function (s) { return String(s.work_date).slice(0, 10); })).length;
+    var today = bucket(t); today.hours = U.round2(U.sum(ts, function (s) { return s.hours; }));
+    var total = bucket(entries); total.hours = U.round2(U.sum(sessions.filter(function (s) { return s.ended_at; }), function (s) { return s.hours; }));
+    return { month: month, today: today, total: total };
+  };
+  /* day -> {net, hours, entries[], sessions[], leave} for calendars */
+  E.dayMap = function (entries, sessions, dayoffs) {
+    var map = {};
+    function d(k) { k = String(k).slice(0, 10); return map[k] || (map[k] = { net: 0, hours: 0, entries: [], sessions: [], leave: null }); }
+    entries.forEach(function (e) { var x = d(e.entry_date); x.entries.push(e); x.net = U.round2(x.net + (e.entry_type === 'deduction' ? -1 : 1) * Number(e.amount)); });
+    sessions.forEach(function (s) { var x = d(s.work_date); x.sessions.push(s); x.hours = U.round2(x.hours + (Number(s.hours) || 0)); });
+    (dayoffs || []).forEach(function (r) { d(r.request_date).leave = r; });
+    return map;
+  };
+  E.buildTimeline = function (b, names) {
+    var out = [];
+    (b.requests || []).forEach(function (r) {
+      var label = { start: 'Start-work request', leave: 'Leave request', dayoff: 'Day-off request (' + (r.request_date || '') + ')' }[r.request_type] || r.request_type;
+      out.push({ at: r.requested_at, kind: 'request', text: label + ' — ' + r.status });
+    });
+    (b.sessions || []).forEach(function (s) { out.push({ at: s.started_at, kind: 'session', text: 'Work started' }); if (s.ended_at) out.push({ at: s.ended_at, kind: 'session', text: 'Work ended — ' + U.fmtHours(s.hours) }); });
+    (b.entries || []).forEach(function (e) { out.push({ at: e.created_at, kind: 'pay', text: ({ daily: 'Daily pay', extra: 'Extra earning', bonus: 'Bonus', deduction: 'Deduction' }[e.entry_type]) + ' ' + U.money(e.amount) + (e.description ? ' — ' + e.description : '') }); });
+    (b.tiers || []).forEach(function (t) { out.push({ at: t.created_at, kind: 'tier', text: (t.manual ? 'Tier set by admin: ' : 'Tier changed: ') + (t.old_tier || '—') + ' → ' + t.new_tier + (t.reason ? ' (' + t.reason + ')' : '') }); });
+    (b.logs || []).forEach(function (l) { out.push({ at: l.created_at, kind: 'admin', text: l.action + (l.details ? ' — ' + l.details : '') + (names && names[l.actor_id] ? ' (by ' + names[l.actor_id] + ')' : '') }); });
+    return out.filter(function (x) { return x.at; }).sort(function (a, b) { return U.ms(b.at) - U.ms(a.at); });
+  };
+
+  /* ---------- settings ---------- */
+  var cache = { rules: null };
+  E.getRules = async function (force) {
+    if (cache.rules && !force) return cache.rules;
+    var rows = await db().list('settings', { eq: { key: 'rules' } });
+    cache.rules = E.mergeRules(rows[0] && rows[0].value);
+    return cache.rules;
+  };
+  E.saveRules = async function (rules) {
+    E.validateRules(rules);
+    var rows = await db().update('settings', { eq: { key: 'rules' } }, { value: rules });
+    if (!rows.length) await db().insert('settings', { key: 'rules', value: rules });
+    cache.rules = E.mergeRules(rules);
+    await E.log(null, 'Updated pay & ranking rules', '');
+  };
+
+  /* ---------- logging / notifications ---------- */
+  E.log = async function (employeeId, action, details) {
+    try { await db().insert('activity_log', { actor_id: EOS.me.id, employee_id: employeeId || null, action: action, details: details || '' }, { quiet: true }); } catch (e) { console.warn('log failed', e); }
+  };
+  E.notifyMany = async function (userIds, title, body, kind) {
+    if (!userIds.length) return;
+    await db().insert('notifications', userIds.map(function (id) { return { user_id: id, title: title, body: body || '', kind: kind || 'info' }; }), { quiet: true });
+  };
+  E.notify = function (userId, title, body, kind) { return E.notifyMany([userId], title, body, kind).catch(function (e) { console.warn('notify failed', e); }); };
+
+  /* ---------- work flow ---------- */
+  E.workState = async function (empId) {
+    var r = await Promise.all([
+      db().list('work_sessions', { eq: { employee_id: empId, ended_at: null }, order: 'started_at.desc' }),
+      db().list('work_requests', { eq: { employee_id: empId, status: 'pending' }, order: 'requested_at.desc' })
+    ]);
+    return {
+      open: r[0][0] || null,
+      pendingStart: r[1].filter(function (x) { return x.request_type === 'start'; })[0] || null,
+      pendingLeave: r[1].filter(function (x) { return x.request_type === 'leave'; })[0] || null,
+      pendingDayoffs: r[1].filter(function (x) { return x.request_type === 'dayoff'; })
+    };
+  };
+  E.requestStart = async function () {
+    var me = EOS.me, st = await E.workState(me.id);
+    if (st.open) throw fail('You already have an active work session.');
+    if (st.pendingStart) throw fail('Your start request is already waiting for approval.');
+    var rows = await db().insert('work_requests', { employee_id: me.id, request_type: 'start', request_date: U.todayKey() });
+    return rows[0];
+  };
+  E.requestLeave = async function () {
+    var me = EOS.me, st = await E.workState(me.id);
+    if (!st.open) throw fail('You are not currently working.');
+    if (st.pendingLeave) throw fail('Your leave request is already waiting for approval.');
+    var rows = await db().insert('work_requests', { employee_id: me.id, request_type: 'leave', request_date: U.todayKey(), session_id: st.open.id });
+    return rows[0];
+  };
+  E.requestDayOff = async function (date, reason) {
+    var me = EOS.me;
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date || '')) throw fail('Choose a date.');
+    if (date < U.todayKey()) throw fail('Choose today or a future date.');
+    reason = String(reason || '').trim(); if (reason.length < 3) throw fail('Add a short reason.'); if (reason.length > 300) throw fail('Reason is too long (300 max).');
+    var ex = await db().list('work_requests', { eq: { employee_id: me.id, request_type: 'dayoff', request_date: date } });
+    if (ex.some(function (r) { return r.status !== 'rejected'; })) throw fail('You already have a day-off request for that date.');
+    var rows = await db().insert('work_requests', { employee_id: me.id, request_type: 'dayoff', request_date: date, reason: reason });
+    return rows[0];
+  };
+
+  E.decideRequest = async function (req, decision, note) {
+    var me = EOS.me; if (!me || me.role !== 'admin') throw fail('Admins only.');
+    if (['approved', 'rejected'].indexOf(decision) < 0) throw fail('Invalid decision.');
+    var now = new Date().toISOString();
+    var emp = (await db().list('profiles', { eq: { id: req.employee_id } }))[0]; if (!emp) throw fail('Employee no longer exists.');
+    if (decision === 'approved' && req.request_type === 'start') {
+      var st = await E.workState(req.employee_id); if (st.open) throw fail(emp.full_name + ' already has an active session.');
+    }
+    var claimed = await db().update('work_requests', { eq: { id: req.id, status: 'pending' } }, { status: decision, reviewed_by: me.id, reviewed_at: now, review_note: note || null });
+    if (!claimed.length) throw fail('This request was already handled.');
+    try {
+      if (decision === 'approved') {
+        if (req.request_type === 'start') {
+          await db().insert('work_sessions', { employee_id: req.employee_id, started_at: now, work_date: U.todayKey(), start_request_id: req.id });
+        } else if (req.request_type === 'leave') {
+          var open = (await db().list('work_sessions', { eq: { employee_id: req.employee_id, ended_at: null } }))[0];
+          if (open) await E.closeSession(open, req.requested_at, req.id);
+        }
+      }
+    } catch (e) {
+      await db().update('work_requests', { eq: { id: req.id } }, { status: 'pending', reviewed_by: null, reviewed_at: null, review_note: null });
+      throw e;
+    }
+    var label = { start: 'Start work', leave: 'Leave', dayoff: 'Day off (' + req.request_date + ')' }[req.request_type];
+    await E.notify(req.employee_id, label + ' request ' + decision, note || (decision === 'approved' ? (req.request_type === 'start' ? 'Your work session has started.' : 'Approved by admin.') : 'Not approved by admin.'), decision === 'approved' ? 'success' : 'warning');
+    await E.log(req.employee_id, label + ' request ' + decision, note || '');
+    return true;
+  };
+
+  E.closeSession = async function (session, endIso, endRequestId) {
+    var start = U.ms(session.started_at), end = Math.max(U.ms(endIso || new Date().toISOString()), start);
+    var hours = U.round2((end - start) / 3600000);
+    var patch = { ended_at: new Date(end).toISOString(), hours: hours }; if (endRequestId) patch.end_request_id = endRequestId;
+    var rows = await db().update('work_sessions', { eq: { id: session.id, ended_at: null } }, patch);
+    if (!rows.length) return null;
+    var rules = await E.getRules();
+    var emp = (await db().list('profiles', { eq: { id: session.employee_id } }))[0];
+    var dayHours = await E.recomputeDay(emp, session.work_date, rules);
+    await E.awardSessionPoints(emp, session, hours, dayHours, rules, patch.ended_at);
+    await E.recalcTier(emp.id);
+    return rows[0];
+  };
+  E.recomputeDay = async function (emp, date, rules) {
+    var ss = await db().list('work_sessions', { eq: { employee_id: emp.id, work_date: date }, notnull: ['ended_at'] });
+    var hours = U.round2(U.sum(ss, function (s) { return s.hours; }));
+    var amount = E.dayPay(emp.monthly_base_salary, rules, hours);
+    var ex = (await db().list('earning_entries', { eq: { employee_id: emp.id, entry_date: date, entry_type: 'daily' } }))[0];
+    if (amount > 0) {
+      var desc = 'Work pay for ' + U.fmtHours(hours);
+      if (ex) await db().update('earning_entries', { eq: { id: ex.id } }, { amount: amount, description: desc });
+      else await db().insert('earning_entries', { employee_id: emp.id, entry_date: date, entry_type: 'daily', amount: amount, description: desc, created_by: EOS.me.id });
+    } else if (ex) await db().remove('earning_entries', { eq: { id: ex.id } });
+    return hours;
+  };
+  E.awardSessionPoints = async function (emp, session, hours, dayHours, rules, atIso) {
+    var pts = Math.round(hours * rules.points.per_hour);
+    if (pts > 0) await db().insert('points_ledger', { employee_id: emp.id, points: pts, reason: 'Worked ' + U.fmtHours(hours), source: 'work', ref: 'sess:' + session.id, created_by: EOS.me.id, created_at: atIso });
+    var ref = 'att:' + session.work_date;
+    if (rules.points.attendance_day > 0 && dayHours >= rules.points.min_hours_for_attendance) {
+      var ex = await db().list('points_ledger', { eq: { employee_id: emp.id, ref: ref } });
+      if (!ex.length) await db().insert('points_ledger', { employee_id: emp.id, points: rules.points.attendance_day, reason: 'Attendance ' + U.fmtDate(session.work_date), source: 'attendance', ref: ref, created_by: EOS.me.id, created_at: atIso });
+    }
+  };
+  E.endSessionNow = async function (session) {
+    var r = await E.closeSession(session, new Date().toISOString(), null);
+    if (r) { await E.notify(session.employee_id, 'Work session ended', 'An admin ended your session.', 'info'); await E.log(session.employee_id, 'Admin ended work session', ''); }
+    return r;
+  };
+
+  /* ---------- pay entries ---------- */
+  E.addEntry = async function (empId, type, amount, description, date) {
+    if (['extra', 'bonus', 'deduction'].indexOf(type) < 0) throw fail('Choose a valid type.');
+    amount = Number(amount); if (!isFinite(amount) || amount <= 0) throw fail('Enter an amount above zero.');
+    if (amount > 10000000) throw fail('Amount is too large.');
+    description = String(description || '').trim().slice(0, 200); if (!description) throw fail('Add a reason / description.');
+    var rows = await db().insert('earning_entries', { employee_id: empId, entry_date: date || U.todayKey(), entry_type: type, amount: U.round2(amount), description: description, created_by: EOS.me.id });
+    var label = { extra: 'Extra earning', bonus: 'Bonus', deduction: 'Deduction' }[type];
+    await E.notify(empId, label + ': ' + U.money(amount), description, type === 'deduction' ? 'warning' : 'success');
+    await E.log(empId, label + ' added ' + U.money(amount), description);
+    return rows[0];
+  };
+  E.deleteEntry = async function (entry) {
+    await db().remove('earning_entries', { eq: { id: entry.id } });
+    await E.log(entry.employee_id, 'Removed ' + entry.entry_type + ' entry ' + U.money(entry.amount), entry.description || '');
+  };
+  E.setSalary = async function (empId, salary) {
+    salary = Number(salary); if (!(salary >= 0)) throw fail('Salary must be zero or more.');
+    var p = await db().admin.updateEmployee(empId, { monthly_base_salary: salary });
+    await E.notify(empId, 'Your monthly salary was updated', 'New base salary: ' + U.money(salary), 'info');
+    await E.log(empId, 'Base salary set to ' + U.money(salary), '');
+    return p;
+  };
+
+  /* ---------- points & tiers ---------- */
+  E.recalcTier = async function (empId) {
+    var emp = (await db().list('profiles', { eq: { id: empId } }))[0];
+    if (!emp || emp.role !== 'employee' || emp.status !== 'active' || emp.tier_override) return null;
+    var rules = await E.getRules();
+    var since = new Date(Date.now() - rules.tiers.window_days * 86400000).toISOString();
+    var led = await db().list('points_ledger', { eq: { employee_id: empId }, gte: { created_at: since } });
+    var pts = U.sum(led, function (l) { return l.points; });
+    var target = E.tierForPoints(pts, rules);
+    if (target === emp.tier) return null;
+    var up = E.tierIndex(target) > E.tierIndex(emp.tier), bonus = 0;
+    await db().update('profiles', { eq: { id: empId } }, { tier: target });
+    if (up && rules.rewards.promotion_bonus[target] > 0) {
+      var prior = await db().list('tier_history', { eq: { employee_id: empId, new_tier: target } });
+      if (!prior.some(function (h) { return Number(h.bonus) > 0; })) {
+        bonus = Number(rules.rewards.promotion_bonus[target]);
+        await db().insert('earning_entries', { employee_id: empId, entry_date: U.todayKey(), entry_type: 'bonus', amount: bonus, description: 'Promotion bonus: ' + target, ref: 'promo:' + target, created_by: EOS.me.id });
+      }
+    }
+    await db().insert('tier_history', { employee_id: empId, old_tier: emp.tier, new_tier: target, reason: 'Automatic: ' + pts + ' pts in last ' + rules.tiers.window_days + ' days', points_snapshot: pts, manual: false, bonus: bonus, created_by: EOS.me.id });
+    await E.notify(empId, up ? 'Promoted to ' + target + '!' : 'Tier changed to ' + target, up ? ('Great work.' + (bonus ? ' Promotion bonus ' + U.money(bonus) + ' added.' : '')) : 'Your recent points moved you down. Keep going to climb back up.', up ? 'success' : 'warning');
+    return { from: emp.tier, to: target, bonus: bonus, points: pts };
+  };
+  E.recalcAll = async function () {
+    var emps = await db().list('profiles', { eq: { role: 'employee', status: 'active' } }), changes = [];
+    for (var i = 0; i < emps.length; i++) { var c = await E.recalcTier(emps[i].id); if (c) changes.push(Object.assign({ name: emps[i].full_name }, c)); }
+    return changes;
+  };
+  E.setTierManual = async function (empId, tier, reason) {
+    var emp = (await db().list('profiles', { eq: { id: empId } }))[0]; if (!emp) throw fail('Employee not found.');
+    if (tier === null || tier === 'auto') {
+      await db().update('profiles', { eq: { id: empId } }, { tier_override: null });
+      var ch = await E.recalcTier(empId);
+      await E.log(empId, 'Tier switched back to automatic', '');
+      return ch;
+    }
+    if (E.TIERS.indexOf(tier) < 0) throw fail('Invalid tier.');
+    await db().update('profiles', { eq: { id: empId } }, { tier: tier, tier_override: tier });
+    await db().insert('tier_history', { employee_id: empId, old_tier: emp.tier, new_tier: tier, reason: String(reason || 'Set by admin').slice(0, 200), points_snapshot: null, manual: true, bonus: 0, created_by: EOS.me.id });
+    await E.notify(empId, 'Your tier is now ' + tier, 'An admin updated your tier.', 'info');
+    await E.log(empId, 'Tier manually set to ' + tier, reason || '');
+  };
+  E.adjustPoints = async function (empId, delta, reason) {
+    delta = Math.round(Number(delta)); if (!delta || !isFinite(delta)) throw fail('Enter a non-zero number of points.');
+    if (Math.abs(delta) > 100000) throw fail('Too many points in one adjustment.');
+    reason = String(reason || '').trim(); if (reason.length < 3) throw fail('Add a reason.');
+    await db().insert('points_ledger', { employee_id: empId, points: delta, reason: reason.slice(0, 200), source: 'manual', ref: null, created_by: EOS.me.id });
+    await E.notify(empId, (delta > 0 ? '+' : '') + delta + ' points', reason, delta > 0 ? 'success' : 'warning');
+    await E.log(empId, 'Points adjusted ' + (delta > 0 ? '+' : '') + delta, reason);
+    return E.recalcTier(empId);
+  };
+  E.leaderboard = async function (period) {
+    var rows = await db().rpc('leaderboard', { p_since: E.periodSince(period) });
+    return E.rankRows((rows || []).map(function (r) { return Object.assign({}, r, { points: Number(r.points) }); }));
+  };
+  E.awardMonthlyRewards = async function (monthKey) {
+    var rules = await E.getRules(), tops = rules.rewards.monthly_top;
+    var from = U.monthStart(monthKey), to = U.monthStart(U.addMonths(monthKey, 1));
+    var emps = await db().list('profiles', { eq: { role: 'employee', status: 'active' } });
+    var led = await db().list('points_ledger', { gte: { created_at: from.toISOString() }, lt: { created_at: to.toISOString() } });
+    var rows = E.rankRows(emps.map(function (e) { return { employee_id: e.id, full_name: e.full_name, points: U.sum(led.filter(function (l) { return l.employee_id === e.id; }), function (l) { return l.points; }) }; }));
+    var awarded = [];
+    for (var i = 0; i < tops.length && i < rows.length; i++) {
+      var r = rows[i], amt = Number(tops[i]); if (!(amt > 0) || r.points <= 0) continue;
+      var ref = 'reward:' + monthKey + ':' + (i + 1);
+      var ex = await db().list('earning_entries', { eq: { ref: ref } });
+      if (ex.length) continue;
+      await db().insert('earning_entries', { employee_id: r.employee_id, entry_date: U.todayKey(), entry_type: 'bonus', amount: amt, description: 'Monthly leaderboard #' + (i + 1) + ' reward (' + U.monthLabel(monthKey) + ')', ref: ref, created_by: EOS.me.id });
+      await E.notify(r.employee_id, 'Leaderboard reward ' + U.money(amt), 'You finished #' + (i + 1) + ' in ' + U.monthLabel(monthKey) + '.', 'success');
+      awarded.push({ name: r.full_name, place: i + 1, amount: amt });
+    }
+    await E.log(null, 'Monthly rewards processed for ' + monthKey, awarded.length + ' awarded');
+    return awarded;
+  };
+
+  /* ---------- messaging / announcements / resources ---------- */
+  E.sendMessage = async function (employeeId, body, file) {
+    var me = EOS.me; body = String(body || '').trim();
+    if (!body && !file) throw fail('Type a message or attach a file.');
+    if (body.length > 2000) throw fail('Message is too long (2000 max).');
+    var att = {};
+    if (file) { var up = await db().files.upload('chat', file, employeeId); att = { attachment_path: up.path, attachment_name: up.name, attachment_type: up.type, attachment_size: up.size }; }
+    var rows = await db().insert('messages', Object.assign({ employee_id: employeeId, sender_id: me.id, sender_role: me.role === 'admin' ? 'admin' : 'employee', body: body }, att));
+    return rows[0];
+  };
+  E.markRead = function (employeeId) { return db().rpc('mark_read', { p_employee: employeeId }); };
+  E.postAnnouncement = async function (title, body, file) {
+    title = String(title || '').trim(); body = String(body || '').trim();
+    if (!title) throw fail('Add a title.'); if (!body && !file) throw fail('Write the announcement text.');
+    var att = {};
+    if (file) { var up = await db().files.upload('resources', file, 'announcements'); att = { attachment_path: up.path, attachment_name: up.name, attachment_type: up.type }; }
+    var rows = await db().insert('announcements', Object.assign({ title: title.slice(0, 120), body: body.slice(0, 4000), author_id: EOS.me.id }, att));
+    var emps = await db().list('profiles', { eq: { role: 'employee', status: 'active' } });
+    await E.notifyMany(emps.map(function (e) { return e.id; }), 'Announcement: ' + title, body.slice(0, 140), 'announcement');
+    await E.log(null, 'Posted announcement', title);
+    return rows[0];
+  };
+  E.addResource = async function (p) {
+    var title = String(p.title || '').trim(); if (!title) throw fail('Add a title.');
+    var type = p.type, att = {};
+    if (p.file) {
+      var up = await db().files.upload('resources', p.file, 'library');
+      att = { storage_path: up.path, file_name: up.name, mime_type: up.type, file_size: up.size };
+      var k = U.fileKind(up.type, up.name); type = k === 'file' ? 'document' : k;
+    } else {
+      if (['note', 'instruction'].indexOf(type) < 0) throw fail('Attach a file, or choose Note / Instruction and write the text.');
+      if (!String(p.body || '').trim()) throw fail('Write the text for this ' + type + '.');
+    }
+    var rows = await db().insert('resources', Object.assign({ title: title.slice(0, 120), resource_type: type, description: String(p.description || '').slice(0, 400), body: String(p.body || '').slice(0, 20000) || null, created_by: EOS.me.id }, att));
+    await E.log(null, 'Published resource', title);
+    return rows[0];
+  };
+  E.removeResource = async function (r) {
+    await db().remove('resources', { eq: { id: r.id } });
+    if (r.storage_path) await db().files.remove('resources', r.storage_path);
+    await E.log(null, 'Removed resource', r.title);
+  };
+
+  /* ---------- employee data bundle ---------- */
+  E.loadBundle = async function (empId) {
+    var f = { eq: { employee_id: empId } };
+    var r = await Promise.all([
+      db().list('earning_entries', Object.assign({ order: 'entry_date.desc' }, f)),
+      db().list('work_sessions', Object.assign({ order: 'started_at.desc' }, f)),
+      db().list('work_requests', Object.assign({ order: 'requested_at.desc' }, f)),
+      db().list('points_ledger', Object.assign({ order: 'created_at.desc' }, f)),
+      db().list('tier_history', Object.assign({ order: 'created_at.desc' }, f))
+    ]);
+    return { entries: r[0], sessions: r[1], requests: r[2], ledger: r[3], tiers: r[4] };
+  };
+
+  /* ---------- demo seeding (preview mode only; every value goes through the real engine) ---------- */
+  E.seedDemo = async function () {
+    var names = [['Aarav Sharma', 28000], ['Priya Singh', 25000], ['Kabir Verma', 22000], ['Meera Nair', 24000]];
+    var existing = await db().list('profiles', { eq: { role: 'employee' } });
+    var n = existing.length, out = [], rules = await E.getRules();
+    for (var i = 0; i < names.length; i++) {
+      var code = 'EMP' + String(n + i + 1).padStart(3, '0'), pw = U.randomPassword(10);
+      var p = await db().admin.createEmployee({ employee_code: code, full_name: names[i][0], password: pw, monthly_base_salary: names[i][1] });
+      out.push({ code: code, name: p.full_name, password: pw });
+      for (var d = 6; d >= 1; d--) {
+        if ((i + d) % 4 === 0) continue; // a day off
+        var day = U.addDays(U.todayKey(), -d), hrs = 5 + ((i * 3 + d * 2) % 5);
+        var start = U.parseKey(day); start.setHours(9, 30, 0, 0);
+        var end = new Date(start.getTime() + hrs * 3600000);
+        var s = (await db().insert('work_sessions', { employee_id: p.id, started_at: start.toISOString(), work_date: day }))[0];
+        await E.closeSession(s, end.toISOString(), null);
+      }
+    }
+    return out;
+  };
+
+  if (typeof module !== 'undefined' && module.exports) module.exports = EOS;
+})(typeof window !== 'undefined' ? window : globalThis);
+
+</script>
+<script>
+/* EmployeeOS shared.js - pieces used by both the employee and admin apps (chat rendering, clipboard). */
+(function (root) {
+  'use strict';
+  var EOS = root.EOS = root.EOS || {};
+  var U = EOS.util, ui = EOS.ui, html = U.html, icon = ui.icon;
+  var C = EOS.shared = {};
+
+  /* Signed/local URLs for inline image + video attachments */
+  C.resolveUrls = function (msgs) {
+    return Promise.all(msgs.map(function (m) {
+      if (m.attachment_path && !m._url && /^(image|video)\//.test(m.attachment_type || '')) {
+        return EOS.db.files.url('chat', m.attachment_path).then(function (u) { m._url = u; }, function () { m._url = null; });
+      }
+      return null;
+    }));
+  };
+
+  C.attHtml = function (m) {
+    if (!m.attachment_path) return '';
+    var t = m.attachment_type || '', k = U.fileKind(t, m.attachment_name);
+    if (k === 'image' && m._url) return html`<a class="att" href="#" data-act="view-att" data-path="${m.attachment_path}" data-name="${m.attachment_name}" data-type="${t}"><img src="${m._url}" alt="${m.attachment_name}" loading="lazy"></a>`;
+    if (k === 'video' && m._url) return html`<span class="att"><video src="${m._url}" controls playsinline preload="metadata"></video></span>`;
+    return html`<a class="att file" href="#" data-act="view-att" data-path="${m.attachment_path}" data-name="${m.attachment_name}" data-type="${t}">${icon('file')}<span class="grow" style="overflow:hidden;text-overflow:ellipsis">${m.attachment_name}</span><span class="muted tiny">${U.fmtSize(m.attachment_size)}</span></a>`;
+  };
+
+  /* role = the viewer's role: their own messages sit on the right and show Sent/Seen */
+  C.msgList = function (msgs, role) {
+    var out = [], lastDay = '', lastMine = -1;
+    msgs.forEach(function (m, i) { if (m.sender_role === role) lastMine = i; });
+    msgs.forEach(function (m, i) {
+      var dk = U.dateKey(new Date(m.created_at)), mine = m.sender_role === role;
+      if (dk !== lastDay) { out.push(html`<div class="dayline">${dk === U.todayKey() ? 'Today' : U.fmtDate(m.created_at, true)}</div>`); lastDay = dk; }
+      var next = msgs[i + 1];
+      var showMeta = !next || next.sender_role !== m.sender_role || U.dateKey(new Date(next.created_at)) !== dk || (U.ms(next.created_at) - U.ms(m.created_at)) > 300000;
+      out.push(html`<div class="bub ${mine ? 'me' : 'them'}">${m.body ? html`<span>${m.body}</span>` : ''}${C.attHtml(m)}</div>`);
+      if (showMeta) out.push(html`<div class="meta ${mine ? 'me' : 'them'}">${U.fmtTime(m.created_at)}${mine && i === lastMine ? (m.read_at ? ' · Seen' : ' · Sent') : ''}</div>`);
+    });
+    return out.length ? html`${out}` : ui.empty('chat', 'No messages yet.');
+  };
+
+  C.copy = function (text) {
+    return new Promise(function (resolve) {
+      function fallback() {
+        var ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;font-size:16px';
+        document.body.appendChild(ta); ta.focus(); ta.select(); ta.setSelectionRange(0, text.length);
+        var ok = false; try { ok = document.execCommand('copy'); } catch (e) {} ta.remove(); resolve(ok);
+      }
+      try { if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text).then(function () { resolve(true); }, fallback); } catch (e) {}
+      fallback();
+    });
+  };
+
+  if (typeof module !== 'undefined' && module.exports) module.exports = EOS;
+})(typeof window !== 'undefined' ? window : globalThis);
+
+</script>
+<script>
+/* EmployeeOS employee.js - the employee application (index.html). */
+(function () {
+  'use strict';
+  var EOS = window.EOS, U = EOS.util, ui = EOS.ui, E = EOS.engine, db = EOS.db;
+  var html = U.html, raw = U.raw, icon = ui.icon;
+  var resolveUrls = EOS.shared.resolveUrls, msgList = function (m, r) { return EOS.shared.msgList(m, r); };
+
+  var S = {
+    me: null, rules: null, b: null, work: null, notifs: [], anns: [], unreadMsgs: 0,
+    route: [], cal: { month: U.monthKey(), sel: U.todayKey() }, lbPeriod: 'weekly', lb: {}, lbMy: null,
+    res: [], resFilter: 'all', chat: { tab: 'admin', msgs: [], file: null }, unsub: null, timers: [], lastSig: ''
+  };
+  var $ = function (id) { return document.getElementById(id); };
+  var DOC_TITLES = { home: 'Home', earnings: 'Earnings', ranks: 'Leaderboard', chat: 'Chat', more: 'More', history: 'Work history', resources: 'Resources', notifications: 'Notifications', profile: 'Profile' };
+
+  /* ======================= boot / auth ======================= */
+  async function boot() {
+    try {
+      var me = await db.auth.init();
+      if (me && me.role !== 'employee') { await db.auth.signOut(); me = null; ui.hideBoot(); return showLogin('Administrators sign in on the Admin portal.'); }
+      if (me) await start(me); else { ui.hideBoot(); await showLogin(); }
+    } catch (e) { ui.fatal(e, boot); }
+  }
+
+  async function showLogin(notice) {
+    var needsSetup = false;
+    try { needsSetup = db.mode === 'local' && await db.auth.needsSetup(); } catch (e) { /* ignore */ }
+    $('root').innerHTML = String(html`
+      ${db.mode === 'local' ? html`<div class="previewbar">PREVIEW MODE · data is stored only in this browser</div>` : ''}
+      <div class="center-screen"><div class="login stack-l">
+        <div class="center"><div class="logo">✦</div><h1>Employee<span style="color:var(--lav)">OS</span></h1><p class="muted" style="margin-top:6px">Sign in to your workspace</p></div>
+        <form class="card stack" data-form="login" autocomplete="on">
+          ${notice ? html`<div class="notice">${notice}</div>` : ''}
+          <div class="err hidden" data-err></div>
+          <label class="lbl">Employee ID or email<input class="field" name="id" id="loginId" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" inputmode="email" required placeholder="e.g. EMP001"></label>
+          <label class="lbl">Password<span class="row nowrap"><input class="field grow" id="loginPw" name="pw" type="password" autocomplete="current-password" required placeholder="Your password"><button class="iconbtn" type="button" data-act="togglepw" aria-label="Show password">${icon('eye')}</button></span></label>
+          <button class="btn block" type="submit">Sign in</button>
+          <p class="muted small center">Forgot your password? Ask your admin to reset it.</p>
+        </form>
+        ${db.mode === 'local' ? html`<div class="notice small">${needsSetup ? html`Preview isn't set up yet. Open the <a href="admin.html">Admin portal</a> to create the preview admin, then add employees there.` : html`Preview mode: employee accounts are created by an admin in the <a href="admin.html">Admin portal</a>.`}</div>` : ''}
+      </div></div>`);
+    ui.hideBoot();
+  }
+
+  async function start(me) {
+    S.me = EOS.me = me;
+    S.rules = await E.getRules(true);
+    await refreshData(true);
+    ui.hideBoot();
+    renderShell();
+    S.unsub = db.subscribe(['work_requests', 'work_sessions', 'earning_entries', 'points_ledger', 'tier_history', 'notifications', 'messages', 'announcements', 'resources', 'profiles'], schedule);
+    S.timers.push(setInterval(tick, 1000));
+    S.timers.push(setInterval(function () { schedule(); }, 30000));
+    document.addEventListener('visibilitychange', onVisible);
+    window.addEventListener('hashchange', route);
+    route(true);
+  }
+  function onVisible() { if (!document.hidden && S.me) schedule(); }
+  function stop() {
+    S.timers.forEach(clearInterval); S.timers = []; if (S.unsub) S.unsub(); S.unsub = null;
+    document.removeEventListener('visibilitychange', onVisible); window.removeEventListener('hashchange', route);
+    S.me = EOS.me = null; S.b = null; S.lb = {}; S.chat = { tab: 'admin', msgs: [], file: null }; S.lastSig = '';
+  }
+  async function logout(msg) {
+    ui.closeAllModals(); stop(); await db.auth.signOut(); location.hash = '';
+    await showLogin(msg);
+  }
+
+  /* ======================= data ======================= */
+  async function refreshData(first) {
+    var id = S.me.id;
+    var r;
+    try {
+      r = await Promise.all([
+        db.list('profiles', { eq: { id: id } }), E.loadBundle(id), E.workState(id),
+        db.list('notifications', { eq: { user_id: id }, order: 'created_at.desc', limit: 80 }),
+        db.list('announcements', { order: 'created_at.desc', limit: 20 }),
+        db.list('messages', { eq: { employee_id: id, sender_role: 'admin', read_at: null } })
+      ]);
+    } catch (e) {
+      if (!first && /suspended|not signed in|jwt|refresh token/i.test((e && e.message) || '')) { await logout('Your account is no longer active or your session ended. Contact your admin.'); throw new Error('inactive'); }
+      throw e;
+    }
+    if (!r[0][0] || r[0][0].status !== 'active') { await logout('Your account is no longer active. Contact your admin.'); throw new Error('inactive'); }
+    var prev = S.work, prevUnread = S.notifs.filter(function (n) { return !n.read_at; }).length;
+    S.me = EOS.me = r[0][0]; S.b = r[1]; S.work = r[2]; S.notifs = r[3]; S.anns = r[4]; S.unreadMsgs = r[5].length;
+    if (!first && prev) {
+      if (prev.pendingStart && S.work.open) ui.ok('Your work session has started ✓');
+      else if (prev.pendingStart && !S.work.pendingStart && !S.work.open) ui.toast('Your start request was not approved.');
+      if (prev.open && !S.work.open) ui.ok('Work session ended. Great job!');
+      var nu = S.notifs.filter(function (n) { return !n.read_at; }).length;
+      if (nu > prevUnread && S.route[0] !== 'notifications') ui.toast(S.notifs[0].title);
+    }
+  }
+  var schedTimer = null;
+  function schedule() {
+    clearTimeout(schedTimer);
+    schedTimer = setTimeout(async function () {
+      if (!S.me) return;
+      try {
+        await refreshData(false);
+        if (S.route[0] === 'chat') { if (S.chat.tab === 'ann') renderPage(false); else await refreshChatList(); updateChrome(); return; }
+        var a = document.activeElement;
+        if (a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName) && $('view') && $('view').contains(a)) { S.dirty = true; updateChrome(); return; }
+        if (S.route[0] === 'ranks') { S.lb = {}; await loadRanks(); }
+        if (S.route[0] === 'resources') await loadRes();
+        renderPage(false); updateChrome();
+      } catch (e) { if (e && e.message !== 'inactive') console.warn('refresh failed', e); }
+    }, 350);
+  }
+  document.addEventListener('focusout', function () { if (S.dirty && S.me) { S.dirty = false; setTimeout(function () { if (S.me && !(document.activeElement && /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName))) renderPage(false); }, 150); } });
+
+  /* ======================= derived ======================= */
+  function monthSummary() { return E.summarize(S.b.entries, S.b.sessions, U.monthKey(), U.todayKey()); }
+  function points() {
+    var since = Date.now() - S.rules.tiers.window_days * 86400000;
+    return { win: U.sum(S.b.ledger.filter(function (l) { return U.ms(l.created_at) >= since; }), function (l) { return l.points; }), all: U.sum(S.b.ledger, function (l) { return l.points; }) };
+  }
+  function dayoffs() { return S.b.requests.filter(function (r) { return r.request_type === 'dayoff' && r.status === 'approved'; }); }
+  function compact(n) { var a = Math.abs(n), s = a >= 100000 ? (a / 100000).toFixed(1).replace(/\.0$/, '') + 'L' : a >= 1000 ? (a / 1000).toFixed(1).replace(/\.0$/, '') + 'k' : String(Math.round(a)); return (n < 0 ? '-' : '') + s; }
+  function statusPill(s) { return html`<span class="pill ${{ pending: 'gold', approved: 'green', rejected: 'red' }[s] || 'gray'}">${s}</span>`; }
+  function reqLabel(r) { return { start: 'Start work', leave: 'Leave (end work)', dayoff: 'Day off' }[r.request_type] || r.request_type; }
+
+  /* ======================= shell ======================= */
+  var TABS = [['home', 'Home', 'home'], ['earnings', 'Earnings', 'wallet'], ['ranks', 'Ranks', 'trophy'], ['chat', 'Chat', 'chat'], ['more', 'More', 'grid']];
+  var SIDE = [['home', 'Home', 'home'], ['earnings', 'Earnings', 'wallet'], ['ranks', 'Leaderboard', 'trophy'], ['chat', 'Chat', 'chat'], ['history', 'Work history', 'clock'], ['resources', 'Resources', 'book'], ['notifications', 'Notifications', 'bell'], ['profile', 'Profile', 'user']];
+  function renderShell() {
+    $('root').innerHTML = String(html`
+      ${db.mode === 'local' ? html`<div class="previewbar">PREVIEW MODE · data is stored only in this browser</div>` : ''}
+      <div class="app">
+        <aside class="sidebar" id="sidebar"></aside>
+        <div>
+          <header class="topbar"><div class="brand"><span class="mark">✦</span><span class="wm">Employee<em>OS</em></span></div><div class="row nowrap"><a class="iconbtn" href="#/notifications" aria-label="Notifications" id="bellBtn">${icon('bell')}<span class="dot hidden" id="bellDot"></span></a><a href="#/profile" aria-label="Profile" id="avatarBtn" style="text-decoration:none"></a></div></header>
+          <main class="main"><div id="view"></div></main>
+        </div>
+      </div>
+      <nav class="tabbar" id="tabbar" aria-label="Main"></nav>`);
+    updateChrome();
+  }
+  function activeTab() { var r = S.route[0] || 'home'; return ['history', 'resources', 'notifications', 'profile'].indexOf(r) >= 0 ? 'more' : r; }
+  function updateChrome() {
+    if (!$('tabbar')) return;
+    var tab = activeTab(), r = S.route[0] || 'home';
+    $('tabbar').innerHTML = String(html`${TABS.map(function (t) { return html`<a href="#/${t[0]}" class="${t[0] === tab ? 'on' : ''}" ${t[0] === tab ? raw('aria-current="page"') : ''}>${icon(t[2])}<span>${t[1]}</span>${t[0] === 'chat' && S.unreadMsgs ? html`<span class="dot">${S.unreadMsgs}</span>` : ''}${t[0] === 'more' && unreadNotifs() ? html`<span class="dot">${unreadNotifs()}</span>` : ''}</a>`; })}`);
+    $('sidebar').innerHTML = String(html`<div class="brand"><span class="mark">✦</span><span class="wm">Employee<em>OS</em></span></div>
+      ${SIDE.map(function (t) { var n = t[0] === 'chat' ? S.unreadMsgs : t[0] === 'notifications' ? unreadNotifs() : 0; return html`<a href="#/${t[0]}" class="${t[0] === r ? 'on' : ''}">${icon(t[2])}<span>${t[1]}</span>${n ? html`<span class="dot">${n}</span>` : ''}</a>`; })}
+      <div class="sp"></div>
+      <div class="row nowrap" style="padding:10px">${ui.avatar(S.me.full_name, true)}<div class="grow"><div class="bold small" style="overflow:hidden;text-overflow:ellipsis">${S.me.full_name}</div><div class="muted tiny">${S.me.employee_code || ''}</div></div></div>
+      <a href="#/home" data-act="logout">${icon('logout')}<span>Sign out</span></a>`);
+    var d = $('bellDot'); if (d) { var n = unreadNotifs(); d.textContent = n; d.classList.toggle('hidden', !n); }
+    $('avatarBtn').innerHTML = String(ui.avatar(S.me.full_name, true));
+  }
+  function unreadNotifs() { return S.notifs.filter(function (n) { return !n.read_at; }).length; }
+
+  /* ======================= router ======================= */
+  var PAGES = {
+    home: { render: pageHome }, earnings: { render: pageEarnings }, ranks: { load: loadRanks, render: pageRanks },
+    chat: { load: loadChat, render: pageChat, after: afterChat }, more: { render: pageMore }, history: { render: pageHistory },
+    resources: { load: loadRes, render: pageResources }, notifications: { render: pageNotifs }, profile: { render: pageProfile }
+  };
+  var routeSeq = 0;
+  async function route(first) {
+    if (!S.me) return;
+    S.route = ui.parseHash(); if (!S.route.length || !PAGES[S.route[0]]) S.route = ['home'];
+    var seq = ++routeSeq, p = PAGES[S.route[0]];
+    document.title = (DOC_TITLES[S.route[0]] || 'Home') + ' · EmployeeOS';
+    updateChrome();
+    if (p.load) { $('view').innerHTML = String(ui.skeleton(3)); try { await p.load(); } catch (e) { ui.fail(e); } }
+    if (seq !== routeSeq) return;
+    renderPage(true); window.scrollTo(0, 0);
+  }
+  function renderPage(animate) {
+    var v = $('view'); if (!v || !S.me) return;
+    var p = PAGES[S.route[0]] || PAGES.home;
+    var h;
+    try { h = p.render(); } catch (e) { console.error(e); h = html`<div class="card err">This page failed to load: ${e.message}</div>`; }
+    v.innerHTML = '<div class="' + (animate ? 'page' : '') + '">' + h + '</div>';
+    if (p.after) p.after();
+    tick();
+  }
+  function head(title, sub, right) { return html`<div class="page-head"><div><h1>${title}</h1>${sub ? html`<div class="sub">${sub}</div>` : ''}</div>${right || ''}</div>`; }
+  function backLink() { return html`<a class="back" href="#/more">${icon('left', 'sm')} More</a>`; }
+
+  /* ======================= HOME ======================= */
+  function greeting() { var h = new Date().getHours(); return h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening'; }
+  function heroBlock() {
+    var w = S.work, offToday = dayoffs().some(function (r) { return r.request_date === U.todayKey(); });
+    if (w.open) {
+      return html`<span class="pill green"><span class="live"></span>ON THE CLOCK</span>
+        <div class="timer" id="timer" data-since="${w.open.started_at}">00:00:00</div>
+        <div class="muted small">Started at ${U.fmtTime(w.open.started_at)}${w.pendingLeave ? ' · leave requested ' + U.fmtTime(w.pendingLeave.requested_at) : ''}</div>
+        ${w.pendingLeave
+          ? html`<button class="startbtn leave" disabled>${icon('clock')} LEAVE REQUESTED · WAITING</button>`
+          : html`<button class="startbtn leave" data-act="leave">${icon('coffee')} LEAVE</button>`}`;
+    }
+    if (w.pendingStart) {
+      return html`<span class="pill gold">REQUEST SENT</span><h2>Waiting for admin approval</h2>
+        <div class="muted small">Sent at ${U.fmtTime(w.pendingStart.requested_at)}. Work starts only after your admin approves it.</div>
+        <button class="startbtn" disabled>${icon('clock')} WAITING FOR APPROVAL</button>`;
+    }
+    return html`<span class="pill">${offToday ? 'DAY OFF APPROVED' : 'READY TO WORK'}</span><h2>${offToday ? 'Enjoy your day off' : 'Ready when you are'}</h2>
+      <div class="muted small">${offToday ? 'You can still start work if your admin needs you today.' : 'Tap START WORK to send a start request to your admin.'}</div>
+      <button class="startbtn" data-act="start">${icon('play')} START WORK</button>`;
+  }
+  function pageHome() {
+    var sm = monthSummary(), pt = points(), tier = S.me.tier, tp = E.tierProgress(pt.win, tier, S.rules), lv = E.level(pt.all);
+    var ann = S.anns[0], days = S.rules.pay.working_days;
+    var todayH = sm.today.hours + (S.work.open ? Math.max(0, (Date.now() - U.ms(S.work.open.started_at)) / 3600000) : 0);
+    return html`
+      ${head(greeting() + ', ' + S.me.full_name.split(' ')[0] + ' 👋', U.fmtDate(new Date(), true))}
+      <div class="hero">${heroBlock()}</div>
+      <div class="tiles four" style="margin-top:14px">
+        <div class="tile accent"><div class="k">Today's earning</div><div class="v">${U.money(sm.today.net)}</div><div class="muted tiny">${S.work.open ? 'Posts when your session ends' : 'Recorded today'}</div></div>
+        <div class="tile"><div class="k">This month</div><div class="v">${U.money(sm.month.net)}</div><div class="muted tiny">Net earnings</div></div>
+        <div class="tile"><div class="k">Total earnings</div><div class="v">${U.money(sm.total.net)}</div><div class="muted tiny">All time, net</div></div>
+        <div class="tile"><div class="k">Monthly salary</div><div class="v">${U.money(S.me.monthly_base_salary)}</div><div class="muted tiny">Base · ${U.money(E.dailyRate(S.me.monthly_base_salary, S.rules))}/day</div></div>
+      </div>
+      <div class="tiles three" style="margin-top:12px">
+        <div class="tile"><div class="k">Extra</div><div class="v good">${U.money(sm.month.extra)}</div></div>
+        <div class="tile"><div class="k">Bonus</div><div class="v good">${U.money(sm.month.bonus)}</div></div>
+        <div class="tile"><div class="k">Deductions</div><div class="v bad">${U.money(sm.month.deduction)}</div></div>
+      </div>
+      <div class="cols2" style="margin-top:14px">
+        <div class="card"><div class="tierrow">${ui.badge(tier, 76)}<div class="grow"><div class="muted tiny bold">YOUR TIER</div><h2>${tier}${S.me.tier_override ? html` <span class="pill gray">set by admin</span>` : ''}</h2><div class="muted small">Level ${lv.level} · ${U.num(pt.all)} XP</div></div></div>
+          <div class="bar" style="margin-top:14px"><i style="width:${tp.pct}%"></i></div>
+          <div class="muted small" style="margin-top:8px">${tp.next ? U.num(tp.remaining) + ' pts to ' + tp.next + ' · ' + U.num(pt.win) + ' pts in last ' + S.rules.tiers.window_days + ' days' : 'Top tier reached 🎉 · ' + U.num(pt.win) + ' pts in last ' + S.rules.tiers.window_days + ' days'}</div></div>
+        <div class="card"><h3>Attendance · ${U.monthLabel(U.monthKey())}</h3>
+          <div class="row between"><div><div class="tile-v" style="font-size:24px;font-weight:850">${sm.month.days}<span class="muted" style="font-size:14px"> / ${days} days</span></div><div class="muted small">Days worked</div></div><div class="right"><div style="font-size:24px;font-weight:850">${U.fmtHours(sm.month.hours)}</div><div class="muted small">Hours this month</div></div></div>
+          <div class="bar" style="margin-top:12px"><i style="width:${Math.min(100, Math.round(sm.month.days / days * 100))}%"></i></div>
+          <div class="muted small" style="margin-top:8px">Today: ${U.fmtHours(todayH)}${S.work.open ? ' (live)' : ''}</div></div>
+      </div>
+      ${ann ? html`<div class="card" style="margin-top:14px"><div class="row between"><h3>${icon('mega', 'sm')} ${ann.title}</h3><span class="muted tiny">${U.ago(ann.created_at)}</span></div><p class="muted" style="white-space:pre-wrap">${ann.body}</p><a class="btn ghost sm" style="margin-top:10px" href="#/chat" data-act="open-ann">All announcements</a></div>` : ''}`;
+  }
+  function tick() {
+    var t = $('timer'); if (!t) return;
+    t.textContent = U.clock(Date.now() - U.ms(t.getAttribute('data-since')));
+  }
+
+  /* ======================= EARNINGS ======================= */
+  function pageEarnings() {
+    var mk = S.cal.month, sum = E.summarize(S.b.entries, S.b.sessions, mk, U.todayKey()).month;
+    var map = E.dayMap(S.b.entries.filter(function (e) { return String(e.entry_date).slice(0, 7) === mk; }), S.b.sessions.filter(function (s) { return String(s.work_date).slice(0, 7) === mk; }), dayoffs().filter(function (r) { return r.request_date.slice(0, 7) === mk; }));
+    var first = U.monthStart(mk).getDay(), n = U.monthDays(mk), cells = '';
+    for (var i = 0; i < first; i++) cells += '<div class="d blank"></div>';
+    for (var d = 1; d <= n; d++) {
+      var key = mk + '-' + (d < 10 ? '0' + d : d), x = map[key];
+      var cls = (key === U.todayKey() ? 'today ' : '') + (key === S.cal.sel ? 'sel ' : '') + (x && x.entries.length ? 'has ' : '') + (x && x.leave ? 'leave ' : '');
+      cells += '<button class="d ' + cls + '" data-act="cal-sel" data-d="' + key + '"><b>' + d + '</b><small>' + (x && x.leave ? 'Leave' : x && x.entries.length ? compact(x.net) : '·') + '</small></button>';
+    }
+    var sel = map[S.cal.sel], inMonth = S.cal.sel.slice(0, 7) === mk;
+    var monthEntries = S.b.entries.filter(function (e) { return String(e.entry_date).slice(0, 7) === mk; });
+    return html`
+      ${head('Earnings', 'Your pay, bonuses and deductions')}
+      <div class="row between" style="margin-bottom:12px"><button class="iconbtn" data-act="cal-nav" data-n="-1" aria-label="Previous month">${icon('left')}</button><b>${U.monthLabel(mk)}</b><button class="iconbtn" data-act="cal-nav" data-n="1" aria-label="Next month" ${mk >= U.monthKey() ? 'disabled' : ''}>${icon('right')}</button></div>
+      <div class="tiles four">
+        <div class="tile accent"><div class="k">Net this month</div><div class="v">${U.money(sum.net)}</div></div>
+        <div class="tile"><div class="k">Work pay</div><div class="v">${U.money(sum.daily)}</div><div class="muted tiny">${sum.days} days · ${U.fmtHours(sum.hours)}</div></div>
+        <div class="tile"><div class="k">Extra + bonus</div><div class="v good">${U.money(sum.extra + sum.bonus)}</div></div>
+        <div class="tile"><div class="k">Deductions</div><div class="v bad">${U.money(sum.deduction)}</div></div>
+      </div>
+      <div class="card" style="margin-top:14px"><h3>Daily earning calendar</h3>
+        <div class="cal">${['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(function (x) { return html`<div class="dow">${x}</div>`; })}${raw(cells)}</div>
+        <p class="muted tiny" style="margin-top:10px">Each day shows net earnings (work pay + extra + bonus − deductions). Gold = approved leave.</p></div>
+      <div class="card" style="margin-top:14px"><h3>${U.fmtDate(S.cal.sel, true)}</h3>${inMonth ? dayDetail(sel) : ui.empty('calendar', 'Select a day in this month.')}</div>
+      <div class="card" style="margin-top:14px"><h3>All entries · ${U.monthLabel(mk)}</h3>
+        ${monthEntries.length ? html`<div class="list">${monthEntries.map(entryRow)}</div>` : ui.empty('wallet', 'No earnings recorded this month yet.')}</div>`;
+  }
+  function entryRow(e) {
+    var lab = { daily: 'Work pay', extra: 'Extra earning', bonus: 'Bonus', deduction: 'Deduction' }[e.entry_type], neg = e.entry_type === 'deduction';
+    return html`<div class="item"><div class="grow"><div class="title">${lab}</div><div class="muted small">${U.fmtDate(e.entry_date)} · ${e.description || ''}</div></div><div class="bold ${neg ? 'bad' : 'good'}">${neg ? '-' : '+'}${U.money(e.amount)}</div></div>`;
+  }
+  function dayDetail(x) {
+    if (!x) return ui.empty('calendar', 'No activity on this day.');
+    return html`${x.leave ? html`<div class="notice" style="margin-bottom:10px">Approved day off — ${x.leave.reason || ''}</div>` : ''}
+      ${x.sessions.length ? html`<div class="list">${x.sessions.map(function (s) { return html`<div class="item"><div class="grow"><div class="title">Work session</div><div class="muted small">${U.fmtTime(s.started_at)} → ${s.ended_at ? U.fmtTime(s.ended_at) : 'in progress'}</div></div><div class="bold">${s.ended_at ? U.fmtHours(s.hours) : '…'}</div></div>`; })}</div>` : ''}
+      ${x.entries.length ? html`<div class="list">${x.entries.map(entryRow)}</div><div class="row between" style="margin-top:8px"><span class="muted">Day total</span><b>${U.money(x.net)}</b></div>` : (x.sessions.length ? '' : ui.empty('calendar', 'No activity on this day.'))}`;
+  }
+
+  /* ======================= RANKS ======================= */
+  async function loadRanks() {
+    var p = S.lbPeriod;
+    if (!S.lb[p]) S.lb[p] = await E.leaderboard(p);
+  }
+  function pageRanks() {
+    var p = S.lbPeriod, rows = S.lb[p] || [], me = rows.filter(function (r) { return r.employee_id === S.me.id; })[0], pt = points(), lv = E.level(pt.all), tp = E.tierProgress(pt.win, S.me.tier, S.rules);
+    var names = { daily: 'Today', weekly: 'This week', monthly: 'This month', all: 'All time' };
+    var top = rows.slice(0, 3), order = [1, 0, 2].filter(function (i) { return top[i]; }), hs = [96, 70, 54];
+    return html`
+      ${head('Leaderboard', 'Ranked by points earned from work and attendance')}
+      <div class="seg" role="tablist">${['daily', 'weekly', 'monthly', 'all'].map(function (k) { return html`<button class="${k === p ? 'on' : ''}" data-act="lb-period" data-p="${k}">${{ daily: 'Daily', weekly: 'Weekly', monthly: 'Monthly', all: 'All-time' }[k]}</button>`; })}</div>
+      <div class="card" style="margin-top:14px"><div class="tierrow">${ui.badge(S.me.tier, 72)}<div class="grow"><div class="muted tiny bold">${names[p].toUpperCase()}</div><h2>${me ? '#' + me.rank : '—'} <span class="muted" style="font-size:14px;font-weight:600">${me ? U.num(me.points) + ' pts' : ''}</span></h2><div class="muted small">${S.me.tier} · Level ${lv.level} · ${U.num(pt.all)} XP</div>
+        <div class="bar" style="margin-top:8px"><i style="width:${tp.pct}%"></i></div><div class="muted tiny" style="margin-top:4px">${tp.next ? U.num(tp.remaining) + ' pts to ' + tp.next : 'Top tier'}</div></div></div></div>
+      ${top.length >= 3 ? html`<div class="podium" style="margin-top:16px">${order.map(function (i) { var r = top[i]; return html`<div>${ui.badge(r.tier, i === 0 ? 56 : 46)}<div class="name">${r.full_name}</div><div class="muted tiny">${U.num(r.points)} pts</div><div class="step" style="--h:${hs[i]}px">${r.rank}</div></div>`; })}</div>` : ''}
+      <div class="card" style="margin-top:14px"><h3>${names[p]}</h3>
+        ${rows.length ? rows.map(function (r) { return html`<div class="lb r${r.rank} ${r.employee_id === S.me.id ? 'me' : ''}"><div class="rk">${r.rank}</div>${ui.badge(r.tier, 34)}<div class="grow"><div class="bold" style="overflow:hidden;text-overflow:ellipsis">${r.full_name}${r.employee_id === S.me.id ? ' (you)' : ''}</div><div class="muted tiny">${r.tier}</div></div><div class="pts">${U.num(r.points)}</div></div>`; }) : ui.empty('trophy', 'No points yet for this period.')}
+        <p class="muted tiny" style="margin-top:12px">Leaderboards show names, tiers and points only — never salary or deductions.</p></div>
+      <div class="card" style="margin-top:14px"><h3>Tier ladder</h3>
+        <div class="ladder">${E.TIERS.map(function (t) { return html`<div class="${t === S.me.tier ? 'on' : ''}">${ui.badge(t, 42)}<div>${t}</div><div class="tiny">${S.rules.tiers.thresholds[t]}+</div></div>`; })}</div>
+        <p class="muted small" style="margin-top:12px">Your tier follows the points you earned in the last ${S.rules.tiers.window_days} days. Earn more to be promoted; fall below a threshold and you can be demoted. ${S.rules.points.per_hour} pts per hour worked, +${S.rules.points.attendance_day} pts for each day with ${S.rules.points.min_hours_for_attendance}h+.</p></div>
+      <div class="card" style="margin-top:14px"><h3>My ranking history</h3>${rankHistory()}</div>`;
+  }
+  function rankHistory() {
+    var items = S.b.tiers.map(function (t) { return { at: t.created_at, html: html`<div class="item"><div class="grow"><div class="title">${t.old_tier || '—'} → ${t.new_tier}</div><div class="muted small">${t.manual ? 'Set by admin' : t.reason}${Number(t.bonus) > 0 ? ' · bonus ' + U.money(t.bonus) : ''}</div></div><div class="muted small">${U.fmtDate(t.created_at)}</div></div>` }; })
+      .concat(S.b.ledger.slice(0, 15).map(function (l) { return { at: l.created_at, html: html`<div class="item"><div class="grow"><div class="title ${l.points < 0 ? 'bad' : ''}">${l.points > 0 ? '+' : ''}${l.points} pts</div><div class="muted small">${l.reason}</div></div><div class="muted small">${U.fmtDate(l.created_at)}</div></div>` }; }))
+      .sort(function (a, b) { return U.ms(b.at) - U.ms(a.at); }).slice(0, 20);
+    return items.length ? html`<div class="list">${items.map(function (i) { return i.html; })}</div>` : ui.empty('activity', 'No ranking activity yet. Complete a work session to earn points.');
+  }
+
+  /* ======================= CHAT ======================= */
+  async function loadChat() {
+    var r = await Promise.all([db.list('messages', { eq: { employee_id: S.me.id }, order: 'created_at.asc', limit: 300 })]);
+    S.chat.msgs = r[0]; await resolveUrls(S.chat.msgs);
+    if (S.chat.tab === 'admin' && S.chat.msgs.some(function (m) { return m.sender_role === 'admin' && !m.read_at; })) { await E.markRead(S.me.id); S.unreadMsgs = 0; S.chat.msgs.forEach(function (m) { if (m.sender_role === 'admin' && !m.read_at) m.read_at = new Date().toISOString(); }); }
+  }
+  function pageChat() {
+    var t = S.chat.tab;
+    return html`${head('Messages', 'Chat with your admin and read team announcements')}
+      <div class="seg"><button class="${t === 'admin' ? 'on' : ''}" data-act="chat-tab" data-t="admin">Admin</button><button class="${t === 'ann' ? 'on' : ''}" data-act="chat-tab" data-t="ann">Announcements${S.anns.length ? ' (' + S.anns.length + ')' : ''}</button></div>
+      <div style="margin-top:12px">${t === 'admin' ? html`<div class="chat card flat tight"><div class="msgs" id="msgs">${msgList(S.chat.msgs, 'employee')}</div>
+        <div id="pendingFile">${pendingFileHtml()}</div>
+        <form class="composer" data-form="chat-send" autocomplete="off"><label class="iconbtn" style="cursor:pointer" aria-label="Attach file">${icon('clip')}<input type="file" id="chatFile" data-change="chat-file" accept="image/*,video/*,application/pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv" class="hidden"></label>
+        <textarea class="field grow" id="chatInput" name="body" rows="1" placeholder="Message your admin…" maxlength="2000" enterkeyhint="send"></textarea><button class="btn round" type="submit" aria-label="Send">${icon('send')}</button></form></div>`
+        : html`<div class="stack">${S.anns.length ? S.anns.map(function (a) { return html`<div class="card"><div class="row between"><h3>${a.title}</h3><span class="muted tiny">${U.fmtDateTime(a.created_at)}</span></div><p class="muted" style="white-space:pre-wrap">${a.body}</p>${a.attachment_path ? html`<button class="btn ghost sm" style="margin-top:10px" data-act="view-ann" data-path="${a.attachment_path}" data-name="${a.attachment_name}" data-type="${a.attachment_type || ''}">${icon('clip', 'sm')} ${a.attachment_name}</button>` : ''}</div>`; }) : ui.empty('mega', 'No announcements yet.')}</div>`}</div>`;
+  }
+  function pendingFileHtml() { var f = S.chat.file; return f ? html`<div class="pending-file">${icon('clip', 'sm')}<span class="grow" style="overflow:hidden;text-overflow:ellipsis">${f.name} · ${U.fmtSize(f.size)}</span><button type="button" class="iconbtn" style="width:32px;height:32px" data-act="chat-clear-file" aria-label="Remove file">${icon('x', 'sm')}</button></div>` : ''; }
+  function afterChat() { var m = $('msgs'); if (m) m.scrollTop = m.scrollHeight; }
+  async function refreshChatList() {
+    if (S.chat.tab !== 'admin') return;
+    var msgs = await db.list('messages', { eq: { employee_id: S.me.id }, order: 'created_at.asc', limit: 300 });
+    var old = S.chat.msgs, urls = {}; old.forEach(function (m) { if (m._url) urls[m.id] = m._url; });
+    msgs.forEach(function (m) { if (urls[m.id]) m._url = urls[m.id]; });
+    S.chat.msgs = msgs; await resolveUrls(msgs);
+    if (msgs.some(function (m) { return m.sender_role === 'admin' && !m.read_at; })) { await E.markRead(S.me.id); msgs.forEach(function (m) { if (m.sender_role === 'admin') m.read_at = m.read_at || new Date().toISOString(); }); S.unreadMsgs = 0; }
+    var box = $('msgs'); if (!box) return;
+    var sig = msgs.length + ':' + msgs.map(function (m) { return m.read_at ? 1 : 0; }).join('');
+    if (sig === S.lastSig) return; S.lastSig = sig;
+    var near = box.scrollHeight - box.scrollTop - box.clientHeight < 140;
+    box.innerHTML = String(msgList(msgs, 'employee')); if (near) box.scrollTop = box.scrollHeight;
+  }
+  document.addEventListener('keydown', function (e) {
+    if (e.target && e.target.id === 'chatInput' && e.key === 'Enter' && !e.shiftKey && !/iPhone|iPad|Android/i.test(navigator.userAgent)) { e.preventDefault(); var f = e.target.form; if (f.requestSubmit) f.requestSubmit(); else f.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true })); }
+  });
+  document.addEventListener('input', function (e) { if (e.target && e.target.id === 'chatInput') { e.target.style.height = 'auto'; e.target.style.height = Math.min(120, e.target.scrollHeight) + 'px'; } });
+
+  /* ======================= MORE / HISTORY / RESOURCES / NOTIFS / PROFILE ======================= */
+  function pageMore() {
+    var rows = [['history', 'Work history', 'Sessions, attendance and leave requests', 'clock'], ['resources', 'Resources', 'Videos, documents and work instructions', 'book'], ['notifications', 'Notifications', unreadNotifs() ? unreadNotifs() + ' unread' : 'You are all caught up', 'bell'], ['profile', 'Profile & settings', 'Account details and password', 'user']];
+    return html`${head('More')}
+      <div class="card"><div class="list">${rows.map(function (r) { return html`<a class="item click" href="#/${r[0]}" style="text-decoration:none;color:inherit"><div class="res" style="width:46px;height:46px;padding:0;border:0;background:transparent"><div class="rico">${icon(r[3])}</div></div><div class="grow"><div class="title">${r[1]}</div><div class="muted small">${r[2]}</div></div>${r[0] === 'notifications' && unreadNotifs() ? html`<span class="pill red">${unreadNotifs()}</span>` : ''}${icon('right', 'sm')}</a>`; })}
+        <div class="item click" data-act="logout"><div class="rico res" style="width:46px;height:46px;padding:0;border:0;background:transparent"><div class="rico" style="color:var(--red)">${icon('logout')}</div></div><div class="grow"><div class="title">Sign out</div></div></div></div></div>`;
+  }
+  function pageHistory() {
+    var sm = monthSummary().month, ss = S.b.sessions.slice(0, 60), reqs = S.b.requests.slice(0, 40);
+    return html`${backLink()}${head('Work history', 'Start and end times for every session', html`<button class="btn sm" data-act="dayoff">${icon('calendar', 'sm')} Request day off</button>`)}
+      <div class="tiles three"><div class="tile"><div class="k">Days worked</div><div class="v">${sm.days}</div><div class="muted tiny">this month</div></div><div class="tile"><div class="k">Hours</div><div class="v">${U.fmtHours(sm.hours)}</div><div class="muted tiny">this month</div></div><div class="tile"><div class="k">All-time</div><div class="v">${U.fmtHours(monthSummary().total.hours)}</div></div></div>
+      <div class="card" style="margin-top:14px"><h3>Sessions</h3>${ss.length ? html`<div class="list">${ss.map(function (s) { return html`<div class="item"><div class="grow"><div class="title">${U.fmtDate(s.work_date, true)}</div><div class="muted small">${U.fmtTime(s.started_at)} → ${s.ended_at ? U.fmtTime(s.ended_at) : 'in progress'}</div></div>${s.ended_at ? html`<div class="bold">${U.fmtHours(s.hours)}</div>` : html`<span class="pill green"><span class="live"></span>Live</span>`}</div>`; })}</div>` : ui.empty('clock', 'No work sessions yet. Tap START WORK on Home.')}</div>
+      <div class="card" style="margin-top:14px"><h3>Requests</h3>${reqs.length ? html`<div class="list">${reqs.map(function (r) { return html`<div class="item"><div class="grow"><div class="title">${reqLabel(r)}${r.request_type === 'dayoff' ? ' · ' + U.fmtDate(r.request_date) : ''}</div><div class="muted small">${U.fmtDateTime(r.requested_at)}${r.reason ? ' · ' + r.reason : ''}${r.review_note ? ' · Admin: ' + r.review_note : ''}</div></div>${statusPill(r.status)}</div>`; })}</div>` : ui.empty('inbox', 'No requests yet.')}</div>`;
+  }
+  async function loadRes() { S.res = await db.list('resources', { order: 'created_at.desc' }); }
+  function pageResources() {
+    var f = S.resFilter, list = S.res.filter(function (r) { return f === 'all' || (f === 'docs' ? ['pdf', 'document'].indexOf(r.resource_type) >= 0 : f === 'notes' ? ['note', 'instruction'].indexOf(r.resource_type) >= 0 : r.resource_type === f); });
+    var tabs = [['all', 'All'], ['video', 'Videos'], ['image', 'Images'], ['docs', 'Documents'], ['notes', 'Notes']];
+    return html`${backLink()}${head('Resources', 'Work instructions and material shared by your admin')}
+      <div class="seg">${tabs.map(function (t) { return html`<button class="${t[0] === f ? 'on' : ''}" data-act="res-filter" data-f="${t[0]}">${t[1]}</button>`; })}</div>
+      <div style="margin-top:14px">${list.length ? list.map(function (r) { return html`<button class="res" data-act="open-res" data-id="${r.id}"><div class="rico">${icon(ui.fileIcon(r.resource_type))}</div><div class="grow"><div class="bold">${r.title}</div><div class="muted small">${r.description || r.resource_type}</div><div class="muted tiny" style="margin-top:3px">${r.resource_type.toUpperCase()} · ${U.fmtDate(r.created_at)}</div></div>${icon('right', 'sm')}</button>`; }) : ui.empty('book', 'Nothing here yet.')}</div>`;
+  }
+  function pageNotifs() {
+    var kinds = { success: 'check', warning: 'info', announcement: 'mega', info: 'bell' };
+    return html`${backLink()}${head('Notifications', '', unreadNotifs() ? html`<button class="btn ghost sm" data-act="read-all">Mark all read</button>` : '')}
+      <div class="card">${S.notifs.length ? html`<div class="list">${S.notifs.map(function (n) { return html`<div class="item click" data-act="read-one" data-id="${n.id}" style="${n.read_at ? 'opacity:.7' : ''}"><div class="rico res" style="width:42px;height:42px;padding:0;border:0;background:transparent"><div class="rico" style="width:42px;height:42px">${icon(kinds[n.kind] || 'bell')}</div></div><div class="grow"><div class="title">${n.title}</div><div class="muted small">${n.body || ''}</div><div class="muted tiny">${U.ago(n.created_at)}</div></div>${n.read_at ? '' : html`<span class="unread"></span>`}</div>`; })}</div>` : ui.empty('bell', 'No notifications yet.')}</div>`;
+  }
+  function pageProfile() {
+    var p = S.me, pt = points();
+    return html`${backLink()}${head('Profile & settings')}
+      <div class="card"><div class="tierrow">${ui.badge(p.tier, 80)}<div class="grow"><h2>${p.full_name}</h2><div class="muted small">${p.employee_code || ''} · ${p.tier} tier</div><div class="muted small">Joined ${U.fmtDate(p.created_at, true)}</div></div></div>
+        <div class="list" style="margin-top:12px"><div class="item"><span class="muted grow">Monthly base salary</span><b>${U.money(p.monthly_base_salary)}</b></div><div class="item"><span class="muted grow">XP</span><b>${U.num(pt.all)}</b></div><div class="item"><span class="muted grow">Email</span><b>${p.email || '—'}</b></div></div></div>
+      <form class="card stack" style="margin-top:14px" data-form="profile"><h3>Contact details</h3><div class="err hidden" data-err></div>
+        <label class="lbl">Phone<input class="field" name="phone" type="tel" value="${p.phone || ''}" maxlength="30" autocomplete="tel"></label>
+        <p class="muted small">To change your name, ID or salary, ask your admin.</p><button class="btn" type="submit">Save</button></form>
+      <form class="card stack" style="margin-top:14px" data-form="password"><h3>Change password</h3><div class="err hidden" data-err></div>
+        <label class="lbl">New password<input class="field" name="pw1" type="password" autocomplete="new-password" minlength="8" required></label>
+        <label class="lbl">Confirm new password<input class="field" name="pw2" type="password" autocomplete="new-password" minlength="8" required></label>
+        <button class="btn" type="submit">Update password</button></form>
+      <button class="btn danger block" style="margin-top:14px" data-act="logout">${icon('logout')} Sign out</button>`;
+  }
+
+  /* ======================= actions ======================= */
+  ui.register({
+    togglepw: function () { var i = $('loginPw'); i.type = i.type === 'password' ? 'text' : 'password'; },
+    logout: async function () { await logout(); },
+    start: async function () {
+      await E.requestStart(); ui.ok('Start request sent to your admin ✓'); await refreshData(false); renderPage(false); updateChrome();
+    },
+    leave: async function () {
+      var ok = await ui.confirm({ title: 'Request to leave?', body: 'Your admin will approve ending today\'s session. Your end time is recorded as right now.', ok: 'Send leave request' });
+      if (!ok) return; await E.requestLeave(); ui.ok('Leave request sent ✓'); await refreshData(false); renderPage(false);
+    },
+    'cal-sel': function (el) { S.cal.sel = el.getAttribute('data-d'); renderPage(false); },
+    'cal-nav': function (el) { S.cal.month = U.addMonths(S.cal.month, Number(el.getAttribute('data-n'))); S.cal.sel = S.cal.month === U.monthKey() ? U.todayKey() : S.cal.month + '-01'; renderPage(false); },
+    'lb-period': async function (el) { S.lbPeriod = el.getAttribute('data-p'); if (!S.lb[S.lbPeriod]) S.lb[S.lbPeriod] = await E.leaderboard(S.lbPeriod); renderPage(false); },
+    'chat-tab': async function (el) { S.chat.tab = el.getAttribute('data-t'); S.lastSig = ''; if (S.chat.tab === 'admin') await loadChat(); renderPage(false); },
+    'chat-clear-file': function () { S.chat.file = null; $('pendingFile').innerHTML = ''; $('chatFile').value = ''; },
+    'view-att': async function (el) { await ui.viewFile('chat', el.getAttribute('data-path'), el.getAttribute('data-name'), el.getAttribute('data-type')); },
+    'view-ann': async function (el) { await ui.viewFile('resources', el.getAttribute('data-path'), el.getAttribute('data-name'), el.getAttribute('data-type')); },
+    'open-ann': function () { S.chat.tab = 'ann'; },
+    'res-filter': function (el) { S.resFilter = el.getAttribute('data-f'); renderPage(false); },
+    'open-res': async function (el) {
+      var r = S.res.filter(function (x) { return x.id === el.getAttribute('data-id'); })[0]; if (!r) return;
+      if (r.storage_path) return ui.viewFile('resources', r.storage_path, r.file_name, r.mime_type, r.title);
+      ui.modal({ title: r.title, wide: true, body: html`${r.description ? html`<p class="muted" style="margin-bottom:10px">${r.description}</p>` : ''}<div class="viewer"><pre>${r.body || ''}</pre></div>` });
+    },
+    'read-all': async function () { await db.update('notifications', { eq: { user_id: S.me.id, read_at: null } }, { read_at: new Date().toISOString() }); await refreshData(false); renderPage(false); updateChrome(); },
+    'read-one': async function (el) { var id = el.getAttribute('data-id'), n = S.notifs.filter(function (x) { return x.id === id; })[0]; if (n && !n.read_at) { await db.update('notifications', { eq: { id: id } }, { read_at: new Date().toISOString() }); await refreshData(false); renderPage(false); updateChrome(); } },
+    dayoff: function () {
+      ui.modal({ title: 'Request a day off', body: html`<form class="stack" data-form="dayoff"><div class="err hidden" data-err></div>
+        <label class="lbl">Date<input class="field" type="date" name="date" min="${U.todayKey()}" value="${U.addDays(U.todayKey(), 1)}" required></label>
+        <label class="lbl">Reason<textarea class="field" name="reason" maxlength="300" required placeholder="Why do you need this day off?"></textarea></label>
+        <button class="btn block" type="submit">Send request</button></form>` });
+    }
+  }, {
+    login: async function (f, v) {
+      var me = await db.auth.signIn(v.id, v.pw);
+      if (me.role !== 'employee') { await db.auth.signOut(); throw new Error('Administrators sign in on the Admin portal.'); }
+      $('root').innerHTML = String(html`<div class="center-screen"><div class="spinner"></div></div>`);
+      try { await start(me); } catch (e) { if (e && e.message === 'inactive') return; await db.auth.signOut(); stop(); await showLogin(); throw e; }
+    },
+    'chat-send': async function (f, v) {
+      var body = (v.body || '').trim(), file = S.chat.file;
+      if (!body && !file) return;
+      await E.sendMessage(S.me.id, body, file);
+      S.chat.file = null; f.reset(); $('pendingFile').innerHTML = ''; $('chatInput').style.height = 'auto'; S.lastSig = '';
+      await refreshChatList(); afterChat();
+    },
+    profile: async function (f, v) { await db.rpc('update_my_profile', { p_phone: v.phone || '' }); await refreshData(false); ui.ok('Profile saved ✓'); },
+    password: async function (f, v) {
+      if (v.pw1 !== v.pw2) throw new Error('Passwords do not match.');
+      await db.auth.changePassword(v.pw1); f.reset(); ui.ok('Password updated ✓');
+    },
+    dayoff: async function (f, v) { await E.requestDayOff(v.date, v.reason); ui.closeAllModals(); ui.ok('Day-off request sent ✓'); await refreshData(false); renderPage(false); }
+  }, {
+    'chat-file': function (el) {
+      var f = el.files && el.files[0]; if (!f) return;
+      if (f.size > db.files.max) { el.value = ''; throw new Error('File is too large (max ' + U.fmtSize(db.files.max) + ').'); }
+      S.chat.file = f; $('pendingFile').innerHTML = String(pendingFileHtml());
+    }
+  });
+
+  boot();
+})();
+
+</script>
+</body>
+</html>
